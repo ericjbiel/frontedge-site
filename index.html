@@ -3,35 +3,514 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Frontedge Studio builds focused web-first games and tools." />
   <title>Frontedge Studio</title>
+
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0e0f13;
-      color: #ffffff;
-      display: flex;
+    :root{
+      --bg: #0b0d12;
+      --panel: rgba(255,255,255,0.06);
+      --panel2: rgba(255,255,255,0.08);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.66);
+      --line: rgba(255,255,255,0.12);
+      --accent: #39d7ff;
+      --accent2: #56f0c2;
+      --shadow: 0 18px 50px rgba(0,0,0,0.55);
+      --radius: 18px;
+      --radius2: 24px;
+      --max: 1100px;
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 70% -10%, rgba(57,215,255,0.22), transparent 60%),
+                  radial-gradient(900px 700px at 15% 10%, rgba(86,240,194,0.18), transparent 55%),
+                  radial-gradient(1100px 900px at 50% 120%, rgba(57,215,255,0.10), transparent 60%),
+                  var(--bg);
+      overflow-x:hidden;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible{
+      outline: 2px solid rgba(57,215,255,0.9);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 22px 18px 56px;
+    }
+
+    /* Top bar */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      padding: 10px 0 22px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 210px;
+    }
+    .brand img{
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      object-fit: cover;
+    }
+    .brand .name{
+      display:flex;
+      flex-direction:column;
+      line-height: 1.05;
+    }
+    .brand .name strong{
+      letter-spacing: 0.04em;
+      font-size: 14px;
+      text-transform: uppercase;
+      opacity: 0.92;
+    }
+    .brand .name span{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .nav a{
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+    }
+    .nav a:hover{
+      color: var(--text);
+      border-color: rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 10px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position: relative;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(700px 260px at 55% 5%, rgba(57,215,255,0.22), transparent 60%),
+                  radial-gradient(540px 260px at 25% 30%, rgba(86,240,194,0.18), transparent 60%);
+      pointer-events:none;
+      opacity: 0.9;
+    }
+    .heroInner{
+      position: relative;
+      padding: 40px 22px;
+      display:grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 18px;
       align-items: center;
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(30px, 4vw, 44px);
+      letter-spacing: -0.02em;
+    }
+    .lead{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+      max-width: 62ch;
+    }
+
+    .ctaRow{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+      cursor:pointer;
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(57,215,255,0.35);
+      background: rgba(57,215,255,0.10);
+    }
+    .btn.primary{
+      border-color: rgba(57,215,255,0.55);
+      background: linear-gradient(180deg, rgba(57,215,255,0.22), rgba(57,215,255,0.10));
+    }
+    .btn.primary:hover{
+      background: linear-gradient(180deg, rgba(57,215,255,0.28), rgba(57,215,255,0.12));
+    }
+
+    .heroCard{
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.18);
+      padding: 14px;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      align-self: stretch;
       justify-content: center;
-      height: 100vh;
     }
-    .wrap {
-      text-align: center;
+
+    .heroCard .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      width: fit-content;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.82);
+      font-size: 12px;
     }
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 0.5rem;
+    .dot{
+      width: 8px; height: 8px;
+      border-radius: 99px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(57,215,255,0.18);
     }
-    p {
-      opacity: 0.7;
-      font-size: 1rem;
+
+    .heroStat{
+      border-top: 1px solid rgba(255,255,255,0.10);
+      padding-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .heroStat strong{ color: var(--text); font-weight: 700; }
+
+    /* Sections */
+    .section{
+      margin-top: 26px;
+      padding-top: 10px;
+    }
+    .sectionHeader{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .sectionHeader h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+    .sectionHeader p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* Portfolio grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .card{
+      grid-column: span 6;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      box-shadow: 0 14px 45px rgba(0,0,0,0.35);
+      overflow:hidden;
+      display:flex;
+      flex-direction: column;
+      min-height: 160px;
+    }
+    .cardTop{
+      padding: 14px 14px 10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap: 10px;
+    }
+    .cardTitle{
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .cardTitle strong{
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    .cardTitle span{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .tag{
+      font-size: 11px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.82);
+      background: rgba(255,255,255,0.04);
+      white-space: nowrap;
+    }
+    .cardBottom{
+      margin-top:auto;
+      display:flex;
+      gap: 10px;
+      padding: 12px 14px 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      align-items:center;
+      justify-content:space-between;
+    }
+    .links{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: rgba(255,255,255,0.86);
+      font-size: 13px;
+    }
+    .links a{
+      padding: 7px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+    }
+    .links a:hover{
+      border-color: rgba(57,215,255,0.35);
+      background: rgba(57,215,255,0.08);
+    }
+
+    /* About / Contact */
+    .split{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .panel{
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      padding: 14px;
+    }
+    .panel h3{
+      margin: 0 0 8px;
+      font-size: 14px;
+    }
+    .panel p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    footer{
+      margin-top: 34px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      padding-top: 16px;
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px){
+      .heroInner{ grid-template-columns: 1fr; }
+      .card{ grid-column: span 12; }
+      .split{ grid-template-columns: 1fr; }
+      .nav{ display:none; }
+      .brand{ min-width: auto; }
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <h1>Frontedge Studio</h1>
-    <p>Building focused web-first games and tools.</p>
+    <div class="topbar">
+      <div class="brand" aria-label="Frontedge Studio">
+        <img src="/assets/frontedge-logo.png" alt="Frontedge Studio logo" />
+        <div class="name">
+          <strong>Frontedge Studio</strong>
+          <span>Web-first games and tools</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#portfolio">Portfolio</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+
+    <section class="hero" aria-label="Hero">
+      <div class="heroInner">
+        <div>
+          <h1>Focused builds. Clean launches.</h1>
+          <p class="lead">
+            Frontedge Studio is a parent brand for small, web-first games and utility apps.
+            Each project is designed to be simple, responsive, and easy to ship.
+          </p>
+
+          <div class="ctaRow">
+            <a class="btn primary" href="#portfolio">View portfolio</a>
+            <a class="btn" href="mailto:admin@frontedgestudio.com">Contact</a>
+          </div>
+        </div>
+
+        <aside class="heroCard" aria-label="Status">
+          <div class="pill"><span class="dot"></span> Live on Cloudflare Pages</div>
+          <div class="heroStat">
+            <strong>Next:</strong> add projects as cards below.<br />
+            Each card supports a live link and a repository link.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="portfolio" class="section" aria-label="Portfolio">
+      <div class="sectionHeader">
+        <div>
+          <h2>Portfolio</h2>
+          <p>Projects you can play, use, and share.</p>
+        </div>
+        <p>Tip: duplicate a card and edit the links.</p>
+      </div>
+
+      <div class="grid">
+        <!-- Project Card Template: Duplicate this block per project -->
+        <article class="card">
+          <div class="cardTop">
+            <div class="cardTitle">
+              <strong>Project Name</strong>
+              <span>One sentence about what it does and why it exists.</span>
+            </div>
+            <div class="tag">Game</div>
+          </div>
+
+          <div class="cardBottom">
+            <div class="links">
+              <a href="#" aria-label="Open live project">Live</a>
+              <a href="#" aria-label="Open GitHub repository">Repo</a>
+            </div>
+            <span class="tag">Status: Coming soon</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="cardTop">
+            <div class="cardTitle">
+              <strong>Project Name</strong>
+              <span>Short description that stays under two lines on mobile.</span>
+            </div>
+            <div class="tag">Tool</div>
+          </div>
+
+          <div class="cardBottom">
+            <div class="links">
+              <a href="#" aria-label="Open live project">Live</a>
+              <a href="#" aria-label="Open GitHub repository">Repo</a>
+            </div>
+            <span class="tag">Status: Coming soon</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" class="section" aria-label="About">
+      <div class="sectionHeader">
+        <div>
+          <h2>About</h2>
+          <p>Simple products, shipped with discipline.</p>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="panel">
+          <h3>What we build</h3>
+          <p>
+            Small, web-first experiences designed for speed, clarity, and replayability.
+            A portfolio approach means each project stands alone and improves the system.
+          </p>
+        </div>
+
+        <div class="panel">
+          <h3>How we publish</h3>
+          <p>
+            Cloudflare Pages for hosting, lightweight code, and a clean release flow.
+            Each project gets a live link and a repository link for transparency.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section" aria-label="Contact">
+      <div class="sectionHeader">
+        <div>
+          <h2>Contact</h2>
+          <p>Partnerships, feedback, or collaboration.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Email</h3>
+        <p>
+          <a class="btn" href="mailto:admin@frontedgestudio.com">admin@frontedgestudio.com</a>
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> Frontedge Studio</div>
+      <div>Built on Cloudflare Pages</div>
+    </footer>
   </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
