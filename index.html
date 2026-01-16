@@ -23,7 +23,6 @@
   <meta property="og:image" content="https://frontedgestudio.com/assets/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Frontedge Studio" />
   <meta name="twitter:description" content="Focused web-first games and tools. Built to ship." />
@@ -31,482 +30,684 @@
 
   <style>
     :root{
-      --bg:#0b0d12;
-      --panel:rgba(255,255,255,.06);
-      --panel2:rgba(255,255,255,.08);
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.66);
-      --line:rgba(255,255,255,.12);
-      --accent:#39d7ff;
-      --accent2:#56f0c2;
-      --shadow:0 18px 50px rgba(0,0,0,.55);
-      --r:18px;
-      --r2:24px;
-      --max:1100px;
+      --bg: #0b0d12;
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.66);
+      --line: rgba(255,255,255,0.12);
+      --card: rgba(255,255,255,0.05);
+      --card2: rgba(255,255,255,0.07);
+      --shadow: 0 22px 70px rgba(0,0,0,0.55);
+      --r: 18px;
+      --r2: 24px;
+      --max: 1120px;
+      --accent: #39d7ff;
+      --accent2: #56f0c2;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior: smooth; }
     body{
-      margin:0;
+      margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* Background glow */
+    .bg{
+      position: fixed;
+      inset: -20%;
+      pointer-events: none;
+      z-index: -1;
       background:
-        radial-gradient(1200px 800px at 70% -10%, rgba(57,215,255,.22), transparent 60%),
-        radial-gradient(900px 700px at 15% 10%, rgba(86,240,194,.18), transparent 55%),
-        radial-gradient(1100px 900px at 50% 120%, rgba(57,215,255,.10), transparent 60%),
-        var(--bg);
-      overflow-x:hidden;
+        radial-gradient(900px 600px at 70% 15%, rgba(57,215,255,0.16), transparent 60%),
+        radial-gradient(900px 650px at 20% 10%, rgba(86,240,194,0.12), transparent 60%),
+        radial-gradient(900px 700px at 50% 90%, rgba(57,215,255,0.10), transparent 60%);
+      filter: blur(0px);
     }
 
-    a{color:inherit;text-decoration:none}
+    a{ color: inherit; text-decoration: none; }
     a:focus-visible, button:focus-visible{
-      outline:2px solid rgba(57,215,255,.9);
-      outline-offset:3px;
-      border-radius:10px;
+      outline: 2px solid rgba(57,215,255,0.9);
+      outline-offset: 3px;
+      border-radius: 12px;
     }
 
-    .wrap{max-width:var(--max);margin:0 auto;padding:22px 18px 56px}
-
-    /* Topbar */
-    .topbar{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:16px;padding:10px 0 22px;
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px 18px 64px;
     }
-    .brand{display:flex;align-items:center;gap:12px}
+
+    /* Top nav */
+    .navWrap{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(11,13,18,0.60);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 180px;
+    }
+
     .brand img{
-      width:44px;height:44px;border-radius:12px;
-      background:rgba(255,255,255,.06);
-      box-shadow:0 10px 30px rgba(0,0,0,.35);
-      object-fit:contain;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+      object-fit: contain;
     }
-    .brand .name{display:flex;flex-direction:column;line-height:1.05}
-    .brand .name strong{
-      letter-spacing:.04em;font-size:15px;text-transform:uppercase;opacity:.92;
-    }
-    .brand .name span{font-size:12px;color:var(--muted);margin-top:3px}
 
-    .nav{display:flex;align-items:center;gap:14px;color:var(--muted);font-size:13px}
-    .nav a{padding:8px 10px;border-radius:12px;border:1px solid transparent}
-    .nav a:hover{
-      color:var(--text);
-      border-color:rgba(255,255,255,.12);
-      background:rgba(255,255,255,.03);
+    .brandText{
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+    }
+
+    .brandText strong{
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.90;
+    }
+
+    .brandText span{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .navLinks{
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .navLinks a{
+      font-size: 13px;
+      color: rgba(255,255,255,0.78);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+    .navLinks a:hover{
+      color: rgba(255,255,255,0.92);
+      border-color: rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .navCta{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(57,215,255,0.40);
+      background: rgba(57,215,255,0.10);
+      font-weight: 650;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .navCta:hover{
+      border-color: rgba(57,215,255,0.55);
+      background: rgba(57,215,255,0.14);
     }
 
     /* Hero */
     .hero{
-      margin-top:10px;border-radius:var(--r2);
-      border:1px solid rgba(255,255,255,.10);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow:var(--shadow);
-      overflow:hidden;position:relative;
-    }
-    .hero::before{
-      content:"";position:absolute;inset:-2px;
-      background:
-        radial-gradient(700px 260px at 55% 5%, rgba(57,215,255,.22), transparent 60%),
-        radial-gradient(540px 260px at 25% 30%, rgba(86,240,194,.18), transparent 60%);
-      pointer-events:none;opacity:.9;
-    }
-    .heroInner{
-      position:relative;padding:40px 22px;
-      display:grid;grid-template-columns:1.35fr .65fr;
-      gap:18px;align-items:center;
-    }
-    h1{margin:0 0 10px;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em}
-    .lead{
-      margin:0 0 18px;color:var(--muted);
-      font-size:16px;line-height:1.5;max-width:62ch;
+      padding: 56px 0 18px;
     }
 
-    .ctaRow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .heroGrid{
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .kicker{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.80);
+      font-size: 13px;
+      width: fit-content;
+    }
+
+    .dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(57,215,255,0.16);
+    }
+
+    h1{
+      margin: 14px 0 10px;
+      font-size: clamp(36px, 4.6vw, 56px);
+      letter-spacing: -0.03em;
+      line-height: 1.03;
+    }
+
+    .lead{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+      max-width: 64ch;
+    }
+
+    .ctaRow{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 14px;
+    }
 
     .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:11px 14px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.06);
-      color:var(--text);font-weight:600;font-size:14px;
-      transition:transform 120ms ease, background 120ms ease, border-color 120ms ease;
-      user-select:none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      font-weight: 650;
+      font-size: 14px;
+      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+      user-select: none;
     }
     .btn:hover{
-      transform:translateY(-1px);
-      border-color:rgba(57,215,255,.35);
-      background:rgba(57,215,255,.10);
+      transform: translateY(-1px);
+      border-color: rgba(57,215,255,0.32);
+      background: rgba(57,215,255,0.10);
     }
     .btn.primary{
-      border-color:rgba(57,215,255,.55);
-      background:linear-gradient(180deg, rgba(57,215,255,.22), rgba(57,215,255,.10));
+      border-color: rgba(57,215,255,0.55);
+      background: linear-gradient(180deg, rgba(57,215,255,0.22), rgba(57,215,255,0.10));
     }
     .btn.primary:hover{
-      background:linear-gradient(180deg, rgba(57,215,255,.28), rgba(57,215,255,.12));
+      background: linear-gradient(180deg, rgba(57,215,255,0.28), rgba(57,215,255,0.12));
     }
 
     .heroCard{
-      border-radius:var(--r);
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.18);
-      padding:14px;display:flex;flex-direction:column;gap:10px;
-      align-self:stretch;justify-content:center;
+      border-radius: var(--r2);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;width:fit-content;
-      padding:7px 10px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      color:rgba(255,255,255,.82);font-size:12px;
-    }
-    .dot{
-      width:8px;height:8px;border-radius:99px;background:var(--accent);
-      box-shadow:0 0 0 4px rgba(57,215,255,.18);
-    }
-    .heroStat{
-      border-top:1px solid rgba(255,255,255,.10);
-      padding-top:10px;color:var(--muted);
-      font-size:13px;line-height:1.45;
-    }
-    .heroStat strong{color:var(--text);font-weight:700}
 
-    /* Sections */
-    .section{margin-top:26px;padding-top:10px}
-    .sectionHeader{
-      display:flex;align-items:flex-end;justify-content:space-between;
-      gap:12px;margin-bottom:12px;
+    .heroCard h3{
+      margin: 0;
+      font-size: 14px;
+      letter-spacing: -0.01em;
     }
-    .sectionHeader h2{margin:0;font-size:18px;letter-spacing:-.01em}
-    .sectionHeader p{margin:0;color:var(--muted);font-size:13px;line-height:1.4}
 
-    /* Grid */
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+    .heroCard p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .miniList{
+      margin-top: 6px;
+      display: grid;
+      gap: 8px;
+    }
+    .miniItem{
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+    }
+    .miniIcon{
+      width: 10px;
+      height: 10px;
+      border-radius: 99px;
+      margin-top: 4px;
+      background: rgba(86,240,194,0.85);
+      box-shadow: 0 0 0 4px rgba(86,240,194,0.14);
+      flex: 0 0 auto;
+    }
+
+    /* Section */
+    .section{
+      padding: 28px 0 0;
+    }
+
+    .sectionHead{
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .sectionHead h2{
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+
+    .sectionHead p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* Portfolio */
+    .portfolioGrid{
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
     .card{
-      grid-column:span 6;border-radius:var(--r);
-      border:1px solid rgba(255,255,255,.10);
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
-      box-shadow:0 14px 45px rgba(0,0,0,.35);
-      overflow:hidden;display:flex;flex-direction:column;min-height:160px;
+      grid-column: span 6;
+      border-radius: var(--r2);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      box-shadow: 0 14px 45px rgba(0,0,0,0.35);
+      overflow: hidden;
+      min-height: 170px;
+      display: flex;
+      flex-direction: column;
     }
+
     .cardTop{
-      padding:14px 14px 10px;display:flex;justify-content:space-between;
-      align-items:flex-start;gap:10px;
+      padding: 14px 14px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
     }
-    .cardTitle{display:flex;flex-direction:column;gap:6px}
-    .cardTitle strong{font-size:15px;letter-spacing:-.01em}
-    .cardTitle span{color:var(--muted);font-size:13px;line-height:1.35}
+
+    .cardTitle{
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .cardTitle strong{
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    .cardTitle span{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
     .tag{
-      font-size:11px;padding:6px 9px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      color:rgba(255,255,255,.82);
-      background:rgba(255,255,255,.04);
-      white-space:nowrap;
+      font-size: 11px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.82);
+      background: rgba(255,255,255,0.04);
+      white-space: nowrap;
     }
+
     .cardBottom{
-      margin-top:auto;display:flex;gap:10px;padding:12px 14px 14px;
-      border-top:1px solid rgba(255,255,255,.08);
-      align-items:center;justify-content:space-between;
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+      padding: 12px 14px 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      align-items: center;
+      justify-content: space-between;
     }
-    .links{display:flex;gap:10px;flex-wrap:wrap;color:rgba(255,255,255,.86);font-size:13px}
+
+    .links{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: rgba(255,255,255,0.88);
+    }
+
     .links a{
-      padding:7px 10px;border-radius:12px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
+      padding: 7px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
     }
     .links a:hover{
-      border-color:rgba(57,215,255,.35);
-      background:rgba(57,215,255,.08);
+      border-color: rgba(57,215,255,0.35);
+      background: rgba(57,215,255,0.08);
     }
 
-    .split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .panel{
-      border-radius:var(--r);
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.04);
-      padding:14px;
+    .emptyState{
+      border-radius: var(--r2);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      box-shadow: 0 14px 45px rgba(0,0,0,0.35);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
     }
-    .panel h3{margin:0 0 8px;font-size:14px}
-    .panel p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+    .emptyText{
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 220px;
+      flex: 1;
+    }
+    .emptyText strong{ font-size: 14px; }
+    .emptyText span{
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .emptyActions{ display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* About */
+    .aboutGrid{
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .panel{
+      grid-column: span 6;
+      border-radius: var(--r2);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      padding: 16px;
+    }
+    .panel h3{ margin: 0 0 8px; font-size: 14px; }
+    .panel p{ margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+
+    /* Contact */
+    .contactCard{
+      border-radius: var(--r2);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
     footer{
-      margin-top:34px;border-top:1px solid rgba(255,255,255,.10);
-      padding-top:16px;color:rgba(255,255,255,.55);
-      font-size:12px;display:flex;justify-content:space-between;
-      gap:12px;flex-wrap:wrap;
+      margin-top: 34px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      padding-top: 16px;
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    @media (max-width: 860px){
-      .heroInner{grid-template-columns:1fr}
-      .card{grid-column:span 12}
-      .split{grid-template-columns:1fr}
-      .nav{display:none}
+    /* Reveal animation */
+    .reveal{
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 650ms ease, transform 650ms ease;
+    }
+    .reveal.show{
+      opacity: 1;
+      transform: translateY(0px);
+    }
+
+    /* Responsive */
+    @media (max-width: 940px){
+      .heroGrid{ grid-template-columns: 1fr; }
+      .card{ grid-column: span 12; }
+      .panel{ grid-column: span 12; }
+    }
+    @media (max-width: 560px){
+      .brand img{ width: 56px; height: 56px; border-radius: 14px; }
+      .brandText strong{ font-size: 14px; }
+      .navLinks{ display: none; }
+      .hero{ padding-top: 40px; }
+      h1{ font-size: 40px; }
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand" aria-label="Frontedge Studio">
+  <div class="bg" aria-hidden="true"></div>
+
+  <header class="navWrap">
+    <div class="nav" role="navigation" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="Frontedge Studio home">
         <img src="/assets/logo-f.png" alt="Frontedge Studio mark" />
-        <div class="name">
+        <div class="brandText">
           <strong>Frontedge Studio</strong>
           <span>Web-first games and tools</span>
         </div>
-      </div>
+      </a>
 
-      <nav class="nav" aria-label="Primary navigation">
+      <div class="navLinks" aria-label="Site links">
         <a href="#portfolio">Portfolio</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
-      </nav>
-    </div>
+      </div>
 
-    <section class="hero" aria-label="Hero">
-      <div class="heroInner">
-        <div>
-          <h1>Focused builds. Clean launches.</h1>
+      <a class="navCta" href="mailto:admin@frontedgestudio.com">admin@frontedgestudio.com</a>
+    </div>
+  </header>
+
+  <main id="top" class="wrap">
+    <section class="hero">
+      <div class="heroGrid">
+        <div class="reveal">
+          <div class="kicker"><span class="dot"></span> Built to ship, built to last</div>
+          <h1>Focused builds.<br/>Clean launches.</h1>
           <p class="lead">
             Frontedge Studio is a parent brand for small, web-first games and utility apps.
-            Each project is designed to be simple, responsive, and easy to ship.
+            Each release is designed to be simple, responsive, and easy to maintain.
           </p>
 
           <div class="ctaRow">
             <a class="btn primary" href="#portfolio">View portfolio</a>
-            <a class="btn" href="mailto:admin@frontedgestudio.com">Contact</a>
+            <a class="btn" href="#contact">Contact</a>
           </div>
         </div>
 
-        <aside class="heroCard" aria-label="Status">
-          <div class="pill"><span class="dot"></span> Live on Cloudflare Pages</div>
-          <div class="heroStat">
-            <strong>Next:</strong> add projects as cards below.<br />
-            Each card supports a live link and a repository link.
+        <aside class="heroCard reveal" aria-label="Studio notes">
+          <h3>What to expect</h3>
+          <p>Small scope products with a consistent release flow.</p>
+          <div class="miniList">
+            <div class="miniItem">
+              <span class="miniIcon" aria-hidden="true"></span>
+              <div>
+                <div style="font-weight:650;font-size:13px;">Web first</div>
+                <div style="color:var(--muted);font-size:13px;line-height:1.45;">Fast load, device-safe layouts, clean UX.</div>
+              </div>
+            </div>
+            <div class="miniItem">
+              <span class="miniIcon" aria-hidden="true"></span>
+              <div>
+                <div style="font-weight:650;font-size:13px;">Portfolio mindset</div>
+                <div style="color:var(--muted);font-size:13px;line-height:1.45;">Each project stands alone and improves the system.</div>
+              </div>
+            </div>
+            <div class="miniItem">
+              <span class="miniIcon" aria-hidden="true"></span>
+              <div>
+                <div style="font-weight:650;font-size:13px;">Simple operations</div>
+                <div style="color:var(--muted);font-size:13px;line-height:1.45;">Cloudflare Pages, GitHub, and repeatable patterns.</div>
+              </div>
+            </div>
           </div>
         </aside>
       </div>
     </section>
 
-    <section id="portfolio" class="section" aria-label="Portfolio">
-      <div class="sectionHeader">
+    <section id="portfolio" class="section">
+      <div class="sectionHead reveal">
         <div>
           <h2>Portfolio</h2>
           <p>Projects you can play, use, and share.</p>
         </div>
-        <p>Tip: duplicate a card and edit the links.</p>
+        <p id="portfolioMeta"></p>
       </div>
 
-      <div class="grid">
-        <!-- Project Card Template: Duplicate this block per project -->
-        <article class="card">
-          <div class="cardTop">
-            <div class="cardTitle">
-              <strong>Project Name</strong>
-              <span>One sentence about what it does and why it exists.</span>
-            </div>
-            <div class="tag">Game</div>
-          </div>
-
-          <div class="cardBottom">
-            <div class="links">
-              <a href="#" aria-label="Open live project">Live</a>
-              <a href="#" aria-label="Open GitHub repository">Repo</a>
-            </div>
-            <span class="tag">Status: Coming soon</span>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="cardTop">
-            <div class="cardTitle">
-              <strong>Project Name</strong>
-              <span>Short description that stays under two lines on mobile.</span>
-            </div>
-            <div class="tag">Tool</div>
-          </div>
-
-          <div class="cardBottom">
-            <div class="links">
-              <a href="#" aria-label="Open live project">Live</a>
-              <a href="#" aria-label="Open GitHub repository">Repo</a>
-            </div>
-            <span class="tag">Status: Coming soon</span>
-          </div>
-        </article>
+      <div id="portfolioEmpty" class="emptyState reveal" style="display:none;">
+        <div class="emptyText">
+          <strong>Portfolio is being built.</strong>
+          <span>New releases will appear here as they go live.</span>
+        </div>
+        <div class="emptyActions">
+          <a class="btn primary" href="https://github.com/ericjbiel" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="mailto:admin@frontedgestudio.com">Email</a>
+        </div>
       </div>
+
+      <div id="portfolioGrid" class="portfolioGrid"></div>
     </section>
 
-    <section id="about" class="section" aria-label="About">
-      <div class="sectionHeader">
+    <section id="about" class="section">
+      <div class="sectionHead reveal">
         <div>
           <h2>About</h2>
           <p>Simple products, shipped with discipline.</p>
         </div>
+        <p>Parent brand for web-first projects.</p>
       </div>
 
-      <div class="split">
-        <div class="panel">
+      <div class="aboutGrid">
+        <div class="panel reveal">
           <h3>What we build</h3>
           <p>
             Small, web-first experiences designed for speed, clarity, and replayability.
-            A portfolio approach means each project stands alone and improves the system.
+            Each project is designed to remain simple to update and extend.
           </p>
         </div>
-
-        <div class="panel">
+        <div class="panel reveal">
           <h3>How we publish</h3>
           <p>
             Cloudflare Pages for hosting, lightweight code, and a clean release flow.
-            Each project gets a live link and a repository link for transparency.
+            Each project gets a live link and a repository link.
           </p>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="section" aria-label="Contact">
-      <div class="sectionHeader">
+    <section id="contact" class="section">
+      <div class="sectionHead reveal">
         <div>
           <h2>Contact</h2>
           <p>Partnerships, feedback, or collaboration.</p>
         </div>
+        <p>Open to focused projects.</p>
       </div>
 
-      <div class="panel">
-        <h3>Email</h3>
-        <p>
-          <a class="btn" href="mailto:admin@frontedgestudio.com">admin@frontedgestudio.com</a>
-        </p>
+      <div class="contactCard reveal">
+        <div>
+          <div style="font-weight:700;">Email</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:4px;">admin@frontedgestudio.com</div>
+        </div>
+        <a class="btn primary" href="mailto:admin@frontedgestudio.com">Send email</a>
       </div>
     </section>
 
-    <footer>
+    <footer class="reveal">
       <div>© <span id="year"></span> Frontedge Studio</div>
       <div>Built on Cloudflare Pages</div>
     </footer>
-  </div>
+  </main>
 
   <script>
+    // Year
     document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>y to ship.
-          </p>
 
-          <div class="ctaRow">
-            <a class="btn primary" href="#portfolio">View portfolio</a>
-            <a class="btn" href="mailto:admin@frontedgestudio.com">Contact</a>
-          </div>
-        </div>
+    // Portfolio data (future-proof)
+    // Add projects here. No HTML duplication required.
+    // type: "Game" or "Tool"
+    // status: "Live", "In progress", "Coming soon"
+    const projects = [
+      // Example:
+      // {
+      //   name: "Shield Shard",
+      //   type: "Game",
+      //   desc: "A tight, reactive defense loop with clean arcade pacing.",
+      //   live: "https://frontedgestudio.com/shield-shard",
+      //   repo: "https://github.com/ericjbiel/shield-shard",
+      //   status: "In progress"
+      // }
+    ];
 
-        <aside class="heroCard" aria-label="Status">
-          <div class="pill"><span class="dot"></span> Live on Cloudflare Pages</div>
-          <div class="heroStat">
-            <strong>Next:</strong> add projects as cards below.<br />
-            Each card supports a live link and a repository link.
-          </div>
-        </aside>
-      </div>
-    </section>
+    const meta = document.getElementById("portfolioMeta");
+    const empty = document.getElementById("portfolioEmpty");
+    const grid = document.getElementById("portfolioGrid");
 
-    <section id="portfolio" class="section" aria-label="Portfolio">
-      <div class="sectionHeader">
-        <div>
-          <h2>Portfolio</h2>
-          <p>Projects you can play, use, and share.</p>
-        </div>
-        <p>Tip: duplicate a card and edit the links.</p>
-      </div>
-
-      <div class="grid">
-        <!-- Project Card Template: Duplicate this block per project -->
-        <article class="card">
+    if (!projects.length) {
+      empty.style.display = "flex";
+      meta.textContent = "New releases soon.";
+    } else {
+      meta.textContent = projects.length + " project" + (projects.length === 1 ? "" : "s") + ".";
+      grid.innerHTML = projects.map(p => `
+        <article class="card reveal">
           <div class="cardTop">
             <div class="cardTitle">
-              <strong>Project Name</strong>
-              <span>One sentence about what it does and why it exists.</span>
+              <strong>${escapeHtml(p.name)}</strong>
+              <span>${escapeHtml(p.desc)}</span>
             </div>
-            <div class="tag">Game</div>
+            <div class="tag">${escapeHtml(p.type)}</div>
           </div>
-
           <div class="cardBottom">
             <div class="links">
-              <a href="#" aria-label="Open live project">Live</a>
-              <a href="#" aria-label="Open GitHub repository">Repo</a>
+              ${p.live ? `<a href="${escapeAttr(p.live)}" target="_blank" rel="noopener">Live</a>` : ""}
+              ${p.repo ? `<a href="${escapeAttr(p.repo)}" target="_blank" rel="noopener">Repo</a>` : ""}
             </div>
-            <span class="tag">Status: Coming soon</span>
+            <span class="tag">Status: ${escapeHtml(p.status || "Live")}</span>
           </div>
         </article>
+      `).join("");
+    }
 
-        <article class="card">
-          <div class="cardTop">
-            <div class="cardTitle">
-              <strong>Project Name</strong>
-              <span>Short description that stays under two lines on mobile.</span>
-            </div>
-            <div class="tag">Tool</div>
-          </div>
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, m => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[m]));
+    }
+    function escapeAttr(s){
+      return String(s).replace(/"/g, "&quot;");
+    }
 
-          <div class="cardBottom">
-            <div class="links">
-              <a href="#" aria-label="Open live project">Live</a>
-              <a href="#" aria-label="Open GitHub repository">Repo</a>
-            </div>
-            <span class="tag">Status: Coming soon</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="about" class="section" aria-label="About">
-      <div class="sectionHeader">
-        <div>
-          <h2>About</h2>
-          <p>Simple products, shipped with discipline.</p>
-        </div>
-      </div>
-
-      <div class="split">
-        <div class="panel">
-          <h3>What we build</h3>
-          <p>
-            Small, web-first experiences designed for speed, clarity, and replayability.
-            A portfolio approach means each project stands alone and improves the system.
-          </p>
-        </div>
-
-        <div class="panel">
-          <h3>How we publish</h3>
-          <p>
-            Cloudflare Pages for hosting, lightweight code, and a clean release flow.
-            Each project gets a live link and a repository link for transparency.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="section" aria-label="Contact">
-      <div class="sectionHeader">
-        <div>
-          <h2>Contact</h2>
-          <p>Partnerships, feedback, or collaboration.</p>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h3>Email</h3>
-        <p>
-          <a class="btn" href="mailto:admin@frontedgestudio.com">admin@frontedgestudio.com</a>
-        </p>
-      </div>
-    </section>
-
-    <footer>
-      <div>© <span id="year"></span> Frontedge Studio</div>
-      <div>Built on Cloudflare Pages</div>
-    </footer>
-  </div>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+    // Reveal on scroll (subtle)
+    const els = Array.from(document.querySelectorAll(".reve
