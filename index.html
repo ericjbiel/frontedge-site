@@ -161,16 +161,16 @@
       gap:10px;
       min-width: 210px;
     }
-    .mark{
+    .logo{
       width: 34px;
       height: 34px;
-      border-radius: 12px;
-      background:
-        radial-gradient(12px 12px at 30% 35%, rgba(124,243,255,.85), transparent 60%),
-        radial-gradient(16px 16px at 70% 70%, rgba(183,166,255,.75), transparent 65%),
-        linear-gradient(180deg, rgba(234,240,255,.12), rgba(234,240,255,.03));
-      border: 1px solid rgba(234,240,255,.14);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      object-fit: contain;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    .brand:hover .logo{
+      transform: translateY(-1px);
+      transition: transform .15s ease;
     }
     .brand-name{
       font-weight: 620;
@@ -215,10 +215,13 @@
     @media (max-width: 760px){
       :root{ --navH: 50px; }
       .brand{ min-width: 0; }
+      .logo{
+        width: 28px;
+        height: 28px;
+      }
       .brand-sub{ display:none; }
       nav ul{ gap:6px; }
       nav a{ padding: 7px 8px; font-size: 12px; }
-      .mark{ width: 30px; height: 30px; border-radius: 11px; }
     }
 
     /* Hero */
@@ -653,7 +656,11 @@
     <div class="wrap">
       <div class="nav">
         <a class="brand" href="#home" aria-label="Frontedge Studio Home">
-          <div class="mark" aria-hidden="true"></div>
+          <img
+            src="/assets/logo-f.png"
+            alt="Frontedge Studio logo"
+            class="logo"
+          />
           <div>
             <div class="brand-name">Frontedge Studio</div>
             <div class="brand-sub">Focused digital products</div>
