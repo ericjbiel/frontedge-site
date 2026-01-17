@@ -37,7 +37,6 @@
                   linear-gradient(180deg, var(--bg), var(--bg2) 55%, var(--bg));
       color:var(--text);
       line-height:1.45;
-      padding-bottom: 24px;
       overflow-x:hidden;
     }
 
@@ -544,7 +543,65 @@
       .grain{ animation:none; }
       .card, .icon-link, nav a{ transition:none; }
     }
-  </style>
+
+    /* Footer */
+    .site-footer{
+      border-top: 1px solid rgba(234,240,255,.08);
+      background: rgba(7,10,16,.55);
+      padding: 44px 0 56px; /* this creates the “extra scroll room” naturally */
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr 1fr;
+      gap: 18px;
+      align-items:start;
+    }
+
+    .footer-name{
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+
+    .footer-muted{
+      color: rgba(234,240,255,.62);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .footer-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      justify-content:flex-start;
+    }
+
+    .footer-links a{
+      color: rgba(234,240,255,.70);
+      font-size: 13px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(234,240,255,.10);
+      background: rgba(234,240,255,.03);
+      transition: background .14s ease, border-color .14s ease, transform .14s ease;
+    }
+
+    .footer-links a:hover{
+      background: rgba(234,240,255,.06);
+      border-color: rgba(124,243,255,.18);
+      transform: translateY(-1px);
+    }
+
+    .footer-meta{
+      text-align:right;
+    }
+
+    @media (max-width: 900px){
+      .footer-grid{ grid-template-columns: 1fr; }
+      .footer-meta{ text-align:left; }
+    }
+</style>
 </head>
 
 <body>
@@ -861,10 +918,13 @@
   <script>
   (function () {
     const navLinks = Array.from(document.querySelectorAll('nav a[data-link]'));
+    const header = document.querySelector('header');
 
     const sections = navLinks
       .map(a => document.getElementById(a.getAttribute('href').slice(1)))
       .filter(Boolean);
+
+    let sectionTops = [];
 
     function setActive(id) {
       navLinks.forEach(a => {
@@ -873,43 +933,48 @@
     }
 
     function getNavHeight() {
-      const css = getComputedStyle(document.documentElement).getPropertyValue('--navH').trim();
-      const fromCss = css ? parseFloat(css) : NaN;
-      const header = document.querySelector('header');
-      const fromDom = header ? header.getBoundingClientRect().height : 0;
-      return Number.isFinite(fromCss) ? fromCss : fromDom;
+      // Prefer actual header height for accuracy across breakpoints
+      return header ? header.getBoundingClientRect().height : 0;
+    }
+
+    function computeSectionTops() {
+      sectionTops = sections.map(sec => ({
+        id: sec.id,
+        top: sec.getBoundingClientRect().top + window.scrollY
+      }));
+      // Ensure sorted by position (safety)
+      sectionTops.sort((a, b) => a.top - b.top);
     }
 
     function isAtBottom() {
-      // 2px tolerance for rounding / mobile address bar quirks
       const scrollPos = window.scrollY + window.innerHeight;
       return scrollPos >= (document.documentElement.scrollHeight - 2);
     }
 
     function updateActiveFromScroll() {
-      // If we're at the bottom, always show the last section as active
+      if (!sectionTops.length) computeSectionTops();
+
+      // If at bottom, always highlight last section (Contact)
       if (isAtBottom()) {
-        const last = sections[sections.length - 1];
+        const last = sectionTops[sectionTops.length - 1];
         if (last) setActive(last.id);
         return;
       }
 
-      const navH = getNavHeight();
-      const line = navH + 18;
+      const line = getNavHeight() + 18;
+      const y = window.scrollY + line;
 
-      let currentId = sections[0]?.id || "home";
-      for (const sec of sections) {
-        const top = sec.getBoundingClientRect().top;
-        if (top <= line) currentId = sec.id;
+      // Find the last section whose top is <= y
+      let current = sectionTops[0]?.id || "home";
+      for (let i = 0; i < sectionTops.length; i++) {
+        if (sectionTops[i].top <= y) current = sectionTops[i].id;
         else break;
       }
 
-      setActive(currentId);
+      setActive(current);
     }
 
-    window.addEventListener('scroll', updateActiveFromScroll, { passive: true });
-    window.addEventListener('resize', updateActiveFromScroll);
-
+    // Click: set immediately (feels responsive)
     navLinks.forEach(a => {
       a.addEventListener('click', () => {
         const id = a.getAttribute('href').slice(1);
@@ -917,8 +982,48 @@
       });
     });
 
+    // Keep year current
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    // Recompute after load (fonts/layout settle), and on resize
+    window.addEventListener('load', () => {
+      computeSectionTops();
+      updateActiveFromScroll();
+      setTimeout(() => { computeSectionTops(); updateActiveFromScroll(); }, 250);
+    });
+
+    window.addEventListener('resize', () => {
+      computeSectionTops();
+      updateActiveFromScroll();
+    });
+
+    window.addEventListener('scroll', updateActiveFromScroll, { passive: true });
+
+    // Initial
+    computeSectionTops();
     updateActiveFromScroll();
   })();
 </script>
+<footer class="site-footer" aria-label="Footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-name">Frontedge Studio</div>
+        <div class="footer-muted">A small studio building focused digital products.</div>
+      </div>
+
+      <div class="footer-links" aria-label="Footer links">
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="footer-meta">
+        <div class="footer-muted">© <span id="year"></span> Frontedge Studio. All rights reserved.</div>
+      </div>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
