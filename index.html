@@ -872,7 +872,6 @@
     }
 
     function getNavHeight() {
-      // Uses the CSS variable if present, falls back to the header height.
       const css = getComputedStyle(document.documentElement).getPropertyValue('--navH').trim();
       const fromCss = css ? parseFloat(css) : NaN;
       const header = document.querySelector('header');
@@ -880,13 +879,23 @@
       return Number.isFinite(fromCss) ? fromCss : fromDom;
     }
 
-    function updateActiveFromScroll() {
-      const navH = getNavHeight();
+    function isAtBottom() {
+      // 2px tolerance for rounding / mobile address bar quirks
+      const scrollPos = window.scrollY + window.innerHeight;
+      return scrollPos >= (document.documentElement.scrollHeight - 2);
+    }
 
-      // The "activation line": a bit below the sticky header
+    function updateActiveFromScroll() {
+      // If we're at the bottom, always show the last section as active
+      if (isAtBottom()) {
+        const last = sections[sections.length - 1];
+        if (last) setActive(last.id);
+        return;
+      }
+
+      const navH = getNavHeight();
       const line = navH + 18;
 
-      // Pick the last section whose top is above the activation line
       let currentId = sections[0]?.id || "home";
       for (const sec of sections) {
         const top = sec.getBoundingClientRect().top;
@@ -897,11 +906,9 @@
       setActive(currentId);
     }
 
-    // Update on scroll/resize
     window.addEventListener('scroll', updateActiveFromScroll, { passive: true });
     window.addEventListener('resize', updateActiveFromScroll);
 
-    // Update immediately on click (so it feels responsive)
     navLinks.forEach(a => {
       a.addEventListener('click', () => {
         const id = a.getAttribute('href').slice(1);
@@ -909,7 +916,6 @@
       });
     });
 
-    // Initial
     updateActiveFromScroll();
   })();
 </script>
