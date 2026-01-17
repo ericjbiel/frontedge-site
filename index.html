@@ -858,30 +858,60 @@
   </section>
 
   <script>
-    // Active nav highlighting based on scroll position
-    (function(){
-      const links = Array.from(document.querySelectorAll('nav a[data-link]'));
-      const sections = links
-        .map(a => document.getElementById(a.getAttribute('href').slice(1)))
-        .filter(Boolean);
+  (function () {
+    const navLinks = Array.from(document.querySelectorAll('nav a[data-link]'));
 
-      const setActive = (id) => {
-        links.forEach(a => a.dataset.active = (a.dataset.link === id) ? "true" : "false");
-      };
+    const sections = navLinks
+      .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+      .filter(Boolean);
 
-      const obs = new IntersectionObserver((entries) => {
-        // pick the most visible intersecting section
-        const visible = entries
-          .filter(e => e.isIntersecting)
-          .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible && visible.target && visible.target.id) setActive(visible.target.id);
-      }, { root: null, threshold: [0.25, 0.35, 0.5, 0.65] });
+    function setActive(id) {
+      navLinks.forEach(a => {
+        a.dataset.active = (a.dataset.link === id) ? "true" : "false";
+      });
+    }
 
-      sections.forEach(sec => obs.observe(sec));
+    function getNavHeight() {
+      // Uses the CSS variable if present, falls back to the header height.
+      const css = getComputedStyle(document.documentElement).getPropertyValue('--navH').trim();
+      const fromCss = css ? parseFloat(css) : NaN;
+      const header = document.querySelector('header');
+      const fromDom = header ? header.getBoundingClientRect().height : 0;
+      return Number.isFinite(fromCss) ? fromCss : fromDom;
+    }
 
-      // Default
-      setActive("home");
-    })();
-  </script>
+    function updateActiveFromScroll() {
+      const navH = getNavHeight();
+
+      // The "activation line": a bit below the sticky header
+      const line = navH + 18;
+
+      // Pick the last section whose top is above the activation line
+      let currentId = sections[0]?.id || "home";
+      for (const sec of sections) {
+        const top = sec.getBoundingClientRect().top;
+        if (top <= line) currentId = sec.id;
+        else break;
+      }
+
+      setActive(currentId);
+    }
+
+    // Update on scroll/resize
+    window.addEventListener('scroll', updateActiveFromScroll, { passive: true });
+    window.addEventListener('resize', updateActiveFromScroll);
+
+    // Update immediately on click (so it feels responsive)
+    navLinks.forEach(a => {
+      a.addEventListener('click', () => {
+        const id = a.getAttribute('href').slice(1);
+        setActive(id);
+      });
+    });
+
+    // Initial
+    updateActiveFromScroll();
+  })();
+</script>
 </body>
 </html>
