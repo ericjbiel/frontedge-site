@@ -1,712 +1,887 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#070A10" />
   <title>Frontedge Studio</title>
-  <meta name="description" content="Frontedge Studio builds focused web-first games and tools." />
-  <meta name="theme-color" content="#0b0d12" />
-
-  <!-- Favicons -->
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-
-  <!-- Social preview -->
-  <meta property="og:title" content="Frontedge Studio" />
-  <meta property="og:description" content="Focused web-first games and tools. Built to ship." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://frontedgestudio.com/" />
-  <meta property="og:image" content="https://frontedgestudio.com/assets/og-image.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Frontedge Studio" />
-  <meta name="twitter:description" content="Focused web-first games and tools. Built to ship." />
-  <meta name="twitter:image" content="https://frontedgestudio.com/assets/og-image.png" />
+  <meta name="description" content="Frontedge Studio — A small studio building focused digital products." />
 
   <style>
     :root{
-      --bg: #0b0d12;
-      --text: rgba(255,255,255,0.92);
-      --muted: rgba(255,255,255,0.66);
-      --line: rgba(255,255,255,0.12);
-      --card: rgba(255,255,255,0.05);
-      --shadow: 0 22px 70px rgba(0,0,0,0.55);
-      --r: 18px;
-      --r2: 24px;
-      --max: 1120px;
-      --accent: #39d7ff;
-      --accent2: #56f0c2;
+      --bg: #070A10;
+      --bg2:#0A0F1A;
+      --card:#0B1222;
+      --text:#EAF0FF;
+      --muted:#A7B2CF;
+      --line: rgba(234,240,255,.10);
+      --line2: rgba(234,240,255,.14);
+      --accent: #7CF3FF;
+      --accent2:#B7A6FF;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 24px;
+      --max: 1100px;
+      --pad: 18px;
+      --pad2: 28px;
+      --navH: 56px;
     }
 
-    *{ box-sizing: border-box; }
-    html{ scroll-behavior: smooth; }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
     body{
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 900px at 20% 10%, rgba(124,243,255,.10), transparent 55%),
+                  radial-gradient(900px 700px at 85% 15%, rgba(183,166,255,.10), transparent 55%),
+                  linear-gradient(180deg, var(--bg), var(--bg2) 55%, var(--bg));
+      color:var(--text);
+      line-height:1.45;
+      overflow-x:hidden;
     }
 
-    .bg{
-      position: fixed;
-      inset: -20%;
-      pointer-events: none;
-      z-index: -1;
-      background:
-        radial-gradient(900px 600px at 70% 15%, rgba(57,215,255,0.16), transparent 60%),
-        radial-gradient(900px 650px at 20% 10%, rgba(86,240,194,0.12), transparent 60%),
-        radial-gradient(900px 700px at 50% 90%, rgba(57,215,255,0.10), transparent 60%);
-    }
-
-    a{ color: inherit; text-decoration: none; }
+    a{ color:inherit; text-decoration:none; }
     a:focus-visible, button:focus-visible{
-      outline: 2px solid rgba(57,215,255,0.9);
+      outline: 2px solid rgba(124,243,255,.65);
       outline-offset: 3px;
-      border-radius: 12px;
+      border-radius: 10px;
     }
 
-    .wrap{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 18px 18px 64px;
+    /* Subtle animated grain + grid */
+    .fx{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+      opacity:.55;
+      background:
+        linear-gradient(rgba(234,240,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234,240,255,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(60% 50% at 50% 18%, black 60%, transparent 100%);
+    }
+    .grain{
+      position:fixed;
+      inset:-20%;
+      pointer-events:none;
+      z-index:-1;
+      opacity:.08;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+      transform:translateZ(0);
+      animation: drift 14s linear infinite;
+    }
+    @keyframes drift{
+      0%{ transform:translate3d(-2%, -2%, 0); }
+      50%{ transform:translate3d(2%, 1%, 0); }
+      100%{ transform:translate3d(-2%, -2%, 0); }
     }
 
-    /* Nav */
-    .navWrap{
-      position: sticky;
-      top: 0;
-      z-index: 20;
+    /* Layout helpers */
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
+    .section{ padding: 74px 0; }
+    .section-title{
+      font-size: 14px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: rgba(234,240,255,.72);
+      margin:0 0 12px 0;
+    }
+    .h2{
+      margin:0 0 14px 0;
+      font-size: clamp(22px, 2.1vw, 30px);
+      letter-spacing: -0.02em;
+    }
+    .lead{
+      margin:0;
+      color:rgba(234,240,255,.78);
+      font-size: 16px;
+      max-width: 70ch;
+    }
+
+    /* Header / Nav */
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
       backdrop-filter: blur(14px);
-      background: rgba(11,13,18,0.60);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(7,10,16,.62);
+      border-bottom: 1px solid rgba(234,240,255,.08);
     }
-
     .nav{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 10px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
+      height: var(--navH);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
     }
-
     .brand{
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 180px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 210px;
     }
-
-    .brand img{
-      width: 44px;
-      height: 44px;
+    .mark{
+      width: 34px;
+      height: 34px;
       border-radius: 12px;
-      background: rgba(255,255,255,0.06);
-      box-shadow: 0 14px 40px rgba(0,0,0,0.35);
-      object-fit: contain;
+      background:
+        radial-gradient(12px 12px at 30% 35%, rgba(124,243,255,.85), transparent 60%),
+        radial-gradient(16px 16px at 70% 70%, rgba(183,166,255,.75), transparent 65%),
+        linear-gradient(180deg, rgba(234,240,255,.12), rgba(234,240,255,.03));
+      border: 1px solid rgba(234,240,255,.14);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
-
-    .brandText{
-      display: flex;
-      flex-direction: column;
-      line-height: 1.05;
+    .brand-name{
+      font-weight: 620;
+      letter-spacing: -0.01em;
+      font-size: 14px;
+      color: rgba(234,240,255,.92);
+      white-space:nowrap;
     }
-
-    .brandText strong{
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      opacity: 0.90;
-    }
-
-    .brandText span{
+    .brand-sub{
       font-size: 12px;
-      color: var(--muted);
-      margin-top: 3px;
+      color: rgba(234,240,255,.56);
+      margin-top:2px;
+      white-space:nowrap;
     }
 
-    .navLinks{
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+    nav ul{
+      list-style:none;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:0;
+      margin:0;
     }
-
-    .navLinks a{
+    nav a{
       font-size: 13px;
-      color: rgba(255,255,255,0.78);
+      color: rgba(234,240,255,.74);
       padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
+      border-radius: 12px;
+      transition: background .15s ease, color .15s ease;
     }
-    .navLinks a:hover{
-      color: rgba(255,255,255,0.92);
-      border-color: rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
+    nav a:hover{
+      background: rgba(234,240,255,.06);
+      color: rgba(234,240,255,.92);
+    }
+    nav a[data-active="true"]{
+      background: rgba(124,243,255,.10);
+      color: rgba(234,240,255,.95);
+      border: 1px solid rgba(124,243,255,.18);
     }
 
-    .navCta{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(57,215,255,0.40);
-      background: rgba(57,215,255,0.10);
-      font-weight: 650;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-    .navCta:hover{
-      border-color: rgba(57,215,255,0.55);
-      background: rgba(57,215,255,0.14);
+    /* Mobile tightening */
+    @media (max-width: 760px){
+      :root{ --navH: 50px; }
+      .brand{ min-width: 0; }
+      .brand-sub{ display:none; }
+      nav ul{ gap:6px; }
+      nav a{ padding: 7px 8px; font-size: 12px; }
+      .mark{ width: 30px; height: 30px; border-radius: 11px; }
     }
 
     /* Hero */
     .hero{
-      padding: 40px 0 18px;
+      padding: 86px 0 40px;
+      min-height: calc(92vh - var(--navH));
+      display:flex;
+      align-items:center;
     }
-
-    .heroGrid{
-      display: grid;
-      grid-template-columns: 1.35fr 0.65fr;
-      gap: 18px;
-      align-items: center;
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 28px;
+      align-items:center;
     }
-
     .kicker{
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
       padding: 8px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-      color: rgba(255,255,255,0.80);
-      font-size: 13px;
-      width: fit-content;
+      border: 1px solid rgba(234,240,255,.12);
+      background: rgba(234,240,255,.04);
+      color: rgba(234,240,255,.72);
+      font-size: 12px;
+      letter-spacing: .06em;
     }
-
     .dot{
-      width: 8px;
-      height: 8px;
-      border-radius: 99px;
-      background: var(--accent);
-      box-shadow: 0 0 0 4px rgba(57,215,255,0.16);
+      width: 7px; height:7px; border-radius: 99px;
+      background: rgba(124,243,255,.9);
+      box-shadow: 0 0 0 6px rgba(124,243,255,.10);
     }
-
-    .hero h1{
-      margin: 14px 0 10px;
-      font-size: clamp(36px, 4.6vw, 56px);
-      letter-spacing: -0.03em;
-      line-height: 1.03;
+    h1{
+      margin: 18px 0 10px 0;
+      font-size: clamp(34px, 4.6vw, 56px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
     }
-
-    .lead{
-      margin: 0 0 18px;
-      color: var(--muted);
+    .tagline{
+      margin: 0;
       font-size: 16px;
-      line-height: 1.55;
-      max-width: 64ch;
+      color: rgba(234,240,255,.78);
+      max-width: 60ch;
     }
-
-    .ctaRow{
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-      margin-top: 14px;
-    }
-
-    .btn{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 11px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-      font-weight: 650;
-      font-size: 14px;
-      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
-      user-select: none;
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(57,215,255,0.32);
-      background: rgba(57,215,255,0.10);
-    }
-    .btn.primary{
-      border-color: rgba(57,215,255,0.55);
-      background: linear-gradient(180deg, rgba(57,215,255,0.22), rgba(57,215,255,0.10));
-    }
-    .btn.primary:hover{
-      background: linear-gradient(180deg, rgba(57,215,255,0.28), rgba(57,215,255,0.12));
-    }
-
-    .heroCard{
-      border-radius: var(--r2);
-      border: 1px solid rgba(255,255,255,0.10);
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    .hero-right{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(234,240,255,.10);
+      background: linear-gradient(180deg, rgba(234,240,255,.06), rgba(234,240,255,.03));
       box-shadow: var(--shadow);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      padding: 18px;
+      position:relative;
+      overflow:hidden;
+      min-height: 220px;
     }
-
-    .heroCard h3{
-      margin: 0;
-      font-size: 14px;
-      letter-spacing: -0.01em;
+    .hero-right:before{
+      content:"";
+      position:absolute;
+      inset:-30%;
+      background:
+        radial-gradient(200px 200px at 20% 30%, rgba(124,243,255,.18), transparent 60%),
+        radial-gradient(240px 240px at 80% 70%, rgba(183,166,255,.14), transparent 62%);
+      filter: blur(2px);
+      transform: translateZ(0);
     }
-
-    .heroCard p{
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .miniList{
+    .hero-metric{
+      position:relative;
+      display:grid;
+      gap:10px;
       margin-top: 6px;
-      display: grid;
-      gap: 8px;
     }
-
-    .miniItem{
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 10px 10px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.04);
+    .mini{
+      position:relative;
+      border-radius: 16px;
+      border: 1px solid rgba(234,240,255,.10);
+      background: rgba(7,10,16,.45);
+      padding: 12px 12px;
     }
-
-    .miniIcon{
-      width: 10px;
-      height: 10px;
-      border-radius: 99px;
-      margin-top: 4px;
-      background: rgba(86,240,194,0.85);
-      box-shadow: 0 0 0 4px rgba(86,240,194,0.14);
-      flex: 0 0 auto;
+    .mini-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 8px;
     }
-
-    /* Sections */
-    .section{
-      padding: 28px 0 0;
+    .mini-title{
+      font-size: 12px;
+      color: rgba(234,240,255,.70);
+      letter-spacing:.08em;
+      text-transform:uppercase;
     }
-
-    .sectionHead{
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
+    .pill{
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(234,240,255,.12);
+      background: rgba(234,240,255,.06);
+      color: rgba(234,240,255,.78);
+      white-space:nowrap;
     }
-
-    .sectionHead h2{
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: -0.01em;
-    }
-
-    .sectionHead p{
-      margin: 0;
-      color: var(--muted);
+    .mini-body{
       font-size: 13px;
-      line-height: 1.4;
-    }
-
-    /* Portfolio (future-proof via data) */
-    .portfolioGrid{
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-    }
-
-    .card{
-      grid-column: span 6;
-      border-radius: var(--r2);
-      border: 1px solid rgba(255,255,255,0.10);
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
-      box-shadow: 0 14px 45px rgba(0,0,0,0.35);
-      overflow: hidden;
-      min-height: 170px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .cardTop{
-      padding: 14px 14px 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .cardTitle{
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .cardTitle strong{
-      font-size: 15px;
-      letter-spacing: -0.01em;
-    }
-    .cardTitle span{
-      color: var(--muted);
-      font-size: 13px;
+      color: rgba(234,240,255,.78);
       line-height: 1.35;
     }
 
+    .scroll-cue{
+      margin-top: 22px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color: rgba(234,240,255,.55);
+      font-size: 12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      user-select:none;
+    }
+    .chev{
+      width: 28px; height: 28px;
+      border-radius: 12px;
+      border: 1px solid rgba(234,240,255,.12);
+      background: rgba(234,240,255,.04);
+      display:grid;
+      place-items:center;
+    }
+    .chev svg{ opacity:.75; }
+
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .hero{ padding-top: 70px; }
+      .hero-right{ min-height: 0; }
+    }
+
+    /* Cards & panels */
+    .panel{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(234,240,255,.10);
+      background: linear-gradient(180deg, rgba(234,240,255,.05), rgba(234,240,255,.02));
+      box-shadow: 0 12px 46px rgba(0,0,0,.34);
+    }
+    .panel-inner{ padding: 22px; }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 900px){
+      .grid-3{ grid-template-columns: 1fr; }
+    }
+
+    .cat{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(234,240,255,.10);
+      background: rgba(7,10,16,.35);
+      padding: 18px 18px;
+      min-height: 120px;
+    }
+    .cat h3{
+      margin:0 0 8px 0;
+      font-size: 18px;
+      letter-spacing:-0.02em;
+    }
+    .cat p{
+      margin:0;
+      color: rgba(234,240,255,.72);
+      font-size: 14px;
+      line-height: 1.45;
+      max-width: 52ch;
+    }
+
+    /* Featured projects */
+    .projects-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+    @media (max-width: 900px){
+      .projects-grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(234,240,255,.10);
+      background: rgba(7,10,16,.40);
+      padding: 16px;
+      box-shadow: 0 10px 34px rgba(0,0,0,.28);
+      transition: transform .14s ease, border-color .14s ease, background .14s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(124,243,255,.20);
+      background: rgba(7,10,16,.52);
+    }
+    .card-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 10px;
+    }
     .tag{
       font-size: 11px;
-      padding: 6px 9px;
+      padding: 6px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.82);
-      background: rgba(255,255,255,0.04);
-      white-space: nowrap;
+      border: 1px solid rgba(234,240,255,.12);
+      background: rgba(234,240,255,.05);
+      color: rgba(234,240,255,.75);
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      white-space:nowrap;
     }
-
-    .cardBottom{
-      margin-top: auto;
-      display: flex;
-      gap: 10px;
-      padding: 12px 14px 14px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      align-items: center;
-      justify-content: space-between;
+    .status{
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(124,243,255,.18);
+      background: rgba(124,243,255,.08);
+      color: rgba(234,240,255,.86);
+      white-space:nowrap;
     }
-
-    .links{
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+    .card h4{
+      margin:0 0 8px 0;
+      font-size: 16px;
+      letter-spacing:-0.02em;
+    }
+    .card p{
+      margin:0;
+      color: rgba(234,240,255,.72);
       font-size: 13px;
-      color: rgba(255,255,255,0.88);
+      line-height: 1.45;
     }
-
-    .links a{
-      padding: 7px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-    }
-    .links a:hover{
-      border-color: rgba(57,215,255,0.35);
-      background: rgba(57,215,255,0.08);
-    }
-
-    .emptyState{
-      border-radius: var(--r2);
-      border: 1px solid rgba(255,255,255,0.10);
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
-      box-shadow: 0 14px 45px rgba(0,0,0,0.35);
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-    .emptyText{
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      min-width: 220px;
-      flex: 1;
-    }
-    .emptyText strong{ font-size: 14px; }
-    .emptyText span{
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-    .emptyActions{ display: flex; gap: 10px; flex-wrap: wrap; }
-
-    /* About */
-    .aboutGrid{
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-    }
-    .panel{
-      grid-column: span 6;
-      border-radius: var(--r2);
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.04);
-      padding: 16px;
-    }
-    .panel h3{ margin: 0 0 8px; font-size: 14px; }
-    .panel p{ margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
-
-    /* Contact */
-    .contactCard{
-      border-radius: var(--r2);
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.04);
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    footer{
-      margin-top: 34px;
-      border-top: 1px solid rgba(255,255,255,0.10);
-      padding-top: 16px;
-      color: rgba(255,255,255,0.55);
+    .card-bottom{
+      margin-top: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      color: rgba(234,240,255,.54);
       font-size: 12px;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+    }
+    .arrow{
+      width: 30px; height: 30px;
+      display:grid;
+      place-items:center;
+      border-radius: 12px;
+      border: 1px solid rgba(234,240,255,.10);
+      background: rgba(234,240,255,.03);
     }
 
-    /* Reveal */
-    .reveal{
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 650ms ease, transform 650ms ease;
+    /* Philosophy */
+    .philo{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+      margin-top: 16px;
     }
-    .reveal.show{
-      opacity: 1;
-      transform: translateY(0px);
-    }
-
-    /* Responsive */
-    @media (max-width: 940px){
-      .heroGrid{ grid-template-columns: 1fr; }
-      .card{ grid-column: span 12; }
-      .panel{ grid-column: span 12; }
+    @media (max-width: 900px){
+      .philo{ grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 560px){
-      /* tighter header on mobile */
-      .nav{ padding: 8px 14px; gap: 10px; }
-      .brand{ min-width: 0; }
+    .stack{
+      display:grid;
+      gap:12px;
+    }
+    .quote{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(234,240,255,.10);
+      background: rgba(7,10,16,.35);
+      padding: 18px;
+      color: rgba(234,240,255,.78);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .principles{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(234,240,255,.10);
+      background: rgba(7,10,16,.35);
+      padding: 18px;
+    }
+    .principles .row{
+      display:grid;
+      gap:4px;
+      padding: 12px 0;
+      border-top: 1px solid rgba(234,240,255,.08);
+    }
+    .principles .row:first-child{ border-top:none; padding-top:0; }
+    .principles .k{
+      font-weight: 620;
+      letter-spacing:-0.01em;
+      font-size: 14px;
+    }
+    .principles .v{
+      color: rgba(234,240,255,.70);
+      font-size: 13px;
+      line-height: 1.45;
+      max-width: 68ch;
+    }
 
-      .brand img{ width: 40px; height: 40px; border-radius: 12px; }
-      .brandText strong{ font-size: 12px; }
-      .brandText span{ font-size: 11px; }
+    /* Connect */
+    .connect{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    @media (max-width: 900px){
+      .connect{ grid-template-columns: 1fr; }
+    }
+    .contact-card{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(234,240,255,.10);
+      background: rgba(7,10,16,.38);
+      padding: 18px;
+    }
+    .email{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(234,240,255,.12);
+      background: rgba(234,240,255,.04);
+      color: rgba(234,240,255,.86);
+      font-size: 14px;
+    }
+    .email small{
+      color: rgba(234,240,255,.60);
+      font-size: 12px;
+    }
 
-      .navLinks{ display: none; }
-      .navCta{ padding: 8px 10px; font-size: 12px; }
+    .socials{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 10px;
+    }
+    .icon-link{
+      width: 44px; height: 44px;
+      display:grid;
+      place-items:center;
+      border-radius: 16px;
+      border: 1px solid rgba(234,240,255,.10);
+      background: rgba(234,240,255,.03);
+      transition: transform .14s ease, border-color .14s ease, background .14s ease;
+    }
+    .icon-link:hover{
+      transform: translateY(-2px);
+      border-color: rgba(124,243,255,.20);
+      background: rgba(234,240,255,.05);
+    }
+    .icon-link svg{ opacity:.82; }
 
-      /* hero starts immediately under the header */
-      .hero{ padding-top: 18px; }
-      .hero h1{ font-size: 40px; }
-      .lead{ font-size: 15px; }
+    /* Anchor offset for sticky header */
+    section{ scroll-margin-top: calc(var(--navH) + 18px); }
 
-      /* prevent "blank" feel on mobile due to reveal timing */
-      .hero .reveal{ opacity: 1 !important; transform: none !important; }
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior:auto; }
+      .grain{ animation:none; }
+      .card, .icon-link, nav a{ transition:none; }
     }
   </style>
 </head>
 
 <body>
-  <div class="bg" aria-hidden="true"></div>
+  <div class="fx" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
-  <header class="navWrap">
-    <div class="nav" role="navigation" aria-label="Primary">
-      <a class="brand" href="#top" aria-label="Frontedge Studio home">
-        <img src="/assets/logo-f.png" alt="Frontedge Studio mark" />
-        <div class="brandText">
-          <strong>Frontedge Studio</strong>
-          <span>Web-first games and tools</span>
-        </div>
-      </a>
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="#home" aria-label="Frontedge Studio Home">
+          <div class="mark" aria-hidden="true"></div>
+          <div>
+            <div class="brand-name">Frontedge Studio</div>
+            <div class="brand-sub">Focused digital products</div>
+          </div>
+        </a>
 
-      <div class="navLinks" aria-label="Site links">
-        <a href="#portfolio">Portfolio</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a href="https://github.com/ericjbiel" target="_blank" rel="noopener">GitHub</a>
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="#home" data-link="home">Home</a></li>
+            <li><a href="#studio" data-link="studio">Studio</a></li>
+            <li><a href="#products" data-link="products">Products</a></li>
+            <li><a href="#projects" data-link="projects">Projects</a></li>
+            <li><a href="#about" data-link="about">About</a></li>
+            <li><a href="#contact" data-link="contact">Contact</a></li>
+          </ul>
+        </nav>
       </div>
-
-      <a class="navCta" href="mailto:admin@frontedgestudio.com">admin@frontedgestudio.com</a>
     </div>
   </header>
 
-  <main id="top" class="wrap">
-    <section class="hero" aria-label="Hero">
-      <div class="heroGrid">
-        <div class="reveal">
-          <div class="kicker"><span class="dot"></span> Built to ship, built to last</div>
-          <h1>Focused builds.<br/>Clean launches.</h1>
-          <p class="lead">
-            Frontedge Studio is a parent brand for small, web-first games and utility apps.
-            Each release is designed to be simple, responsive, and easy to maintain.
-          </p>
+  <!-- HERO -->
+  <main id="home" class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker">
+            <span class="dot" aria-hidden="true"></span>
+            Independent studio
+          </div>
 
-          <div class="ctaRow">
-            <a class="btn primary" href="#portfolio">View portfolio</a>
-            <a class="btn" href="#contact">Contact</a>
+          <h1>Frontedge Studio</h1>
+          <p class="tagline">A small studio building focused digital products.</p>
+
+          <div class="scroll-cue" aria-hidden="true">
+            <div class="chev">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            Scroll
           </div>
         </div>
 
-        <aside class="heroCard reveal" aria-label="Notes">
-          <h3>What to expect</h3>
-          <p>Small scope products with a consistent release flow.</p>
-
-          <div class="miniList">
-            <div class="miniItem">
-              <span class="miniIcon" aria-hidden="true"></span>
-              <div>
-                <div style="font-weight:650;font-size:13px;">Web first</div>
-                <div style="color:var(--muted);font-size:13px;line-height:1.45;">Fast load, device-safe layouts, clean UX.</div>
+        <aside class="hero-right" aria-label="Studio snapshot">
+          <div class="hero-metric">
+            <div class="mini">
+              <div class="mini-top">
+                <div class="mini-title">Focus</div>
+                <div class="pill">Small by design</div>
               </div>
+              <div class="mini-body">Clear scope, fast iteration, and deliberate constraints.</div>
             </div>
-
-            <div class="miniItem">
-              <span class="miniIcon" aria-hidden="true"></span>
-              <div>
-                <div style="font-weight:650;font-size:13px;">Portfolio mindset</div>
-                <div style="color:var(--muted);font-size:13px;line-height:1.45;">Each project stands alone and improves the system.</div>
+            <div class="mini">
+              <div class="mini-top">
+                <div class="mini-title">Work</div>
+                <div class="pill">Play · Tools · Labs</div>
               </div>
+              <div class="mini-body">Games, utility apps, and experiments that stand on their own.</div>
             </div>
-
-            <div class="miniItem">
-              <span class="miniIcon" aria-hidden="true"></span>
-              <div>
-                <div style="font-weight:650;font-size:13px;">Simple operations</div>
-                <div style="color:var(--muted);font-size:13px;line-height:1.45;">Cloudflare Pages, GitHub, repeatable patterns.</div>
+            <div class="mini">
+              <div class="mini-top">
+                <div class="mini-title">Now</div>
+                <div class="pill">v1 building</div>
               </div>
+              <div class="mini-body">Two games shipped. Third in progress. Tools coming next.</div>
             </div>
           </div>
         </aside>
       </div>
-    </section>
-
-    <section id="portfolio" class="section" aria-label="Portfolio">
-      <div class="sectionHead reveal">
-        <div>
-          <h2>Portfolio</h2>
-          <p>Projects you can play, use, and share.</p>
-        </div>
-        <p id="portfolioMeta"></p>
-      </div>
-
-      <div id="portfolioEmpty" class="emptyState reveal" style="display:none;">
-        <div class="emptyText">
-          <strong>Portfolio is being built.</strong>
-          <span>New releases will appear here as they go live.</span>
-        </div>
-        <div class="emptyActions">
-          <a class="btn primary" href="https://github.com/ericjbiel" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn" href="mailto:admin@frontedgestudio.com">Email</a>
-        </div>
-      </div>
-
-      <div id="portfolioGrid" class="portfolioGrid" aria-label="Projects"></div>
-    </section>
-
-    <section id="about" class="section" aria-label="About">
-      <div class="sectionHead reveal">
-        <div>
-          <h2>About</h2>
-          <p>Simple products, shipped with discipline.</p>
-        </div>
-        <p>Parent brand for web-first projects.</p>
-      </div>
-
-      <div class="aboutGrid">
-        <div class="panel reveal">
-          <h3>What we build</h3>
-          <p>
-            Small, web-first experiences designed for speed, clarity, and replayability.
-            Each project is designed to remain simple to update and extend.
-          </p>
-        </div>
-
-        <div class="panel reveal">
-          <h3>How we publish</h3>
-          <p>
-            Cloudflare Pages for hosting, lightweight code, and a clean release flow.
-            Each project gets a live link and a repository link.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="section" aria-label="Contact">
-      <div class="sectionHead reveal">
-        <div>
-          <h2>Contact</h2>
-          <p>Partnerships, feedback, or collaboration.</p>
-        </div>
-        <p>Open to focused projects.</p>
-      </div>
-
-      <div class="contactCard reveal">
-        <div>
-          <div style="font-weight:700;">Email</div>
-          <div style="color:var(--muted);font-size:13px;margin-top:4px;">admin@frontedgestudio.com</div>
-        </div>
-        <a class="btn primary" href="mailto:admin@frontedgestudio.com">Send email</a>
-      </div>
-    </section>
-
-    <footer class="reveal">
-      <div>© <span id="year"></span> Frontedge Studio</div>
-      <div>Built on Cloudflare Pages</div>
-    </footer>
+    </div>
   </main>
 
-  <script>
-    // Year
-    document.getElementById("year").textContent = new Date().getFullYear();
+  <!-- STUDIO IDENTITY -->
+  <section id="studio" class="section">
+    <div class="wrap">
+      <div class="section-title">Studio</div>
+      <h2 class="h2">Built for focus.</h2>
+      <p class="lead">
+        We build small, focused digital products with clear purpose.<br />
+        Our work is guided by simplicity, fast iteration, and thoughtful constraints rather than scale for its own sake.<br />
+        Each project is designed to stand on its own, whether it is a game, an app, or an experiment.
+      </p>
 
-    // Portfolio data (add projects here)
-    const projects = [
-      // Example:
-      // {
-      //   name: "Shield Shard",
-      //   type: "Game",
-      //   desc: "A tight, reactive defense loop with clean arcade pacing.",
-      //   live: "https://frontedgestudio.com/shield-shard",
-      //   repo: "https://github.com/ericjbiel/shield-shard",
-      //   status: "In progress"
-      // }
-    ];
-
-    const meta = document.getElementById("portfolioMeta");
-    const empty = document.getElementById("portfolioEmpty");
-    const grid = document.getElementById("portfolioGrid");
-
-    if (!projects.length) {
-      empty.style.display = "flex";
-      meta.textContent = "New releases soon.";
-    } else {
-      meta.textContent = projects.length + " project" + (projects.length === 1 ? "" : "s") + ".";
-      grid.innerHTML = projects.map(p => `
-        <article class="card reveal">
-          <div class="cardTop">
-            <div class="cardTitle">
-              <strong>${escapeHtml(p.name)}</strong>
-              <span>${escapeHtml(p.desc)}</span>
-            </div>
-            <div class="tag">${escapeHtml(p.type)}</div>
+      <div class="philo" style="margin-top:18px;">
+        <div class="principles">
+          <div class="row">
+            <div class="k">Small by design</div>
+            <div class="v">Scope is intentionally constrained so ideas can ship, learn, and evolve.</div>
           </div>
-          <div class="cardBottom">
-            <div class="links">
-              ${p.live ? `<a href="${escapeAttr(p.live)}" target="_blank" rel="noopener">Live</a>` : ""}
-              ${p.repo ? `<a href="${escapeAttr(p.repo)}" target="_blank" rel="noopener">Repo</a>` : ""}
-            </div>
-            <span class="tag">Status: ${escapeHtml(p.status |
+          <div class="row">
+            <div class="k">Focused outcomes</div>
+            <div class="v">Every product exists to do one thing well, without unnecessary complexity.</div>
+          </div>
+          <div class="row">
+            <div class="k">Built to last</div>
+            <div class="v">Projects are made to age gracefully and remain useful over time.</div>
+          </div>
+        </div>
+
+        <div class="quote">
+          <div class="section-title" style="margin:0 0 10px 0;">Note</div>
+          This site is designed to scale. When the catalog grows, “Play” becomes its own page and this landing stays curated.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU BUILD -->
+  <section id="products" class="section">
+    <div class="wrap">
+      <div class="section-title">Products</div>
+      <h2 class="h2">What we build</h2>
+      <p class="lead">Three lanes, each with a clean purpose.</p>
+
+      <div class="projects-grid" style="margin-top:18px;">
+        <div class="cat">
+          <h3>Play</h3>
+          <p>Small games built around focused mechanics, tight feedback loops, and deliberate pacing.</p>
+        </div>
+        <div class="cat">
+          <h3>Tools</h3>
+          <p>Purpose-built apps designed to solve one problem clearly, efficiently, and without excess.</p>
+        </div>
+        <div class="cat">
+          <h3>Labs</h3>
+          <p>Experiments and prototypes used to explore ideas before they evolve into finished products.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS -->
+  <section id="projects" class="section">
+    <div class="wrap">
+      <div class="section-title">Projects</div>
+      <h2 class="h2">Featured Projects</h2>
+      <p class="lead">A curated view of what we are building right now.</p>
+
+      <div class="projects-grid">
+        <!-- Replace these with real projects as you finalize them -->
+        <a class="card" href="#" aria-label="Project 1 (placeholder)">
+          <div class="card-top">
+            <span class="tag">Play</span>
+            <span class="status">Released</span>
+          </div>
+          <h4>Game 001</h4>
+          <p>Minimal, high-signal arcade loop built for quick sessions and clean replay.</p>
+          <div class="card-bottom">
+            <span>Web-first</span>
+            <span class="arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a class="card" href="#" aria-label="Project 2 (placeholder)">
+          <div class="card-top">
+            <span class="tag">Play</span>
+            <span class="status">Released</span>
+          </div>
+          <h4>Game 002</h4>
+          <p>Timing-focused survival design with deliberate pressure and fast iteration.</p>
+          <div class="card-bottom">
+            <span>Web-first</span>
+            <span class="arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <a class="card" href="#" aria-label="Project 3 (placeholder)">
+          <div class="card-top">
+            <span class="tag">Play</span>
+            <span class="status">In Progress</span>
+          </div>
+          <h4>Game 003</h4>
+          <p>In development. Focused mechanic exploration with a clean, shippable endpoint.</p>
+          <div class="card-bottom">
+            <span>In progress</span>
+            <span class="arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M7 17L17 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / PHILOSOPHY -->
+  <section id="about" class="section">
+    <div class="wrap">
+      <div class="section-title">About</div>
+      <h2 class="h2">How we decide</h2>
+      <p class="lead">A simple filter keeps the work focused and finishable.</p>
+
+      <div class="philo">
+        <div class="quote">
+          We choose projects based on clarity rather than scale.<br />
+          Ideas are pursued only when they can be expressed with tight scope and a clear endpoint.<br />
+          Constraints are used intentionally to force decisions, reduce noise, and keep momentum high.<br />
+          Not every experiment is meant to grow, but every project is expected to reach a finished state.<br />
+          Over time, patterns emerge and the strongest ideas are expanded, while others remain complete as they are.
+        </div>
+
+        <div class="principles">
+          <div class="row">
+            <div class="k">Ship a complete thing</div>
+            <div class="v">A small finished product beats a large unfinished idea.</div>
+          </div>
+          <div class="row">
+            <div class="k">Reduce noise early</div>
+            <div class="v">Constraints make choices easier and outcomes clearer.</div>
+          </div>
+          <div class="row">
+            <div class="k">Earn expansion</div>
+            <div class="v">Scale only after the core loop proves itself.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / CONNECT -->
+  <section id="contact" class="section">
+    <div class="wrap">
+      <div class="section-title">Contact</div>
+      <h2 class="h2">Connect</h2>
+      <p class="lead">A simple way to reach us, plus social placeholders for future channels.</p>
+
+      <div class="connect">
+        <div class="contact-card">
+          <div class="section-title" style="margin:0 0 10px 0;">Email</div>
+          <div>For inquiries, collaborations, or questions, reach out directly.</div>
+          <a class="email" href="mailto:contact@frontedgestudio.com">
+            <span style="font-weight:620;">contact@frontedgestudio.com</span>
+            <small>mailto</small>
+          </a>
+        </div>
+
+        <div class="contact-card">
+          <div class="section-title" style="margin:0 0 10px 0;">Socials</div>
+          <div style="color:rgba(234,240,255,.72); font-size:13px; line-height:1.45;">
+            Placeholders below. Replace each <code style="background:rgba(234,240,255,.06); padding:2px 6px; border-radius:8px; border:1px solid rgba(234,240,255,.10);">href</code> when accounts are created.
+          </div>
+
+          <div class="socials" aria-label="Social links">
+            <!-- Core studio channels -->
+            <a class="icon-link" href="#" aria-label="Discord (placeholder)" title="Discord">
+              <!-- Chat bubble -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a class="icon-link" href="#" aria-label="Reddit (placeholder)" title="Reddit">
+              <!-- Simple circle -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M12 20c4.4 0 8-2.9 8-6.5S16.4 7 12 7 4 9.9 4 13.5 7.6 20 12 20z" stroke="currentColor" stroke-width="2"/>
+                <path d="M9.5 13.8h.01M14.5 13.8h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                <path d="M9.8 16.2c.8.7 1.7 1 2.2 1s1.4-.3 2.2-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </a>
+            <a class="icon-link" href="#" aria-label="GitHub (placeholder)" title="GitHub">
+              <!-- Octocat-ish circle -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-3 .7-3.7-1.2-3.7-1.2-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.9-.7 2.3-1.2.1-.7.4-1.2.7-1.5-2.4-.3-4.9-1.2-4.9-5.3 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1.9-.2 1.8-.3 2.7-.3.9 0 1.8.1 2.7.3 2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.1 1.8 1.1 3 0 4.1-2.5 5-4.9 5.3.4.3.8 1 .8 2v3c0 .3.2.6.7.5A10 10 0 0 0 12 2z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+
+            <!-- Common public socials -->
+            <a class="icon-link" href="#" aria-label="X (placeholder)" title="X">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </a>
+            <a class="icon-link" href="#" aria-label="Instagram (placeholder)" title="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M16 3H8a5 5 0 0 0-5 5v8a5 5 0 0 0 5 5h8a5 5 0 0 0 5-5V8a5 5 0 0 0-5-5z" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z" stroke="currentColor" stroke-width="2"/>
+                <path d="M17.5 6.5h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </a>
+            <a class="icon-link" href="#" aria-label="YouTube (placeholder)" title="YouTube">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M22 12s0-4-1-5-5-1-9-1-8 0-9 1-1 5-1 5 0 4 1 5 5 1 9 1 8 0 9-1 1-5 1-5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10 9l6 3-6 3V9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Active nav highlighting based on scroll position
+    (function(){
+      const links = Array.from(document.querySelectorAll('nav a[data-link]'));
+      const sections = links
+        .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+        .filter(Boolean);
+
+      const setActive = (id) => {
+        links.forEach(a => a.dataset.active = (a.dataset.link === id) ? "true" : "false");
+      };
+
+      const obs = new IntersectionObserver((entries) => {
+        // pick the most visible intersecting section
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible && visible.target && visible.target.id) setActive(visible.target.id);
+      }, { root: null, threshold: [0.25, 0.35, 0.5, 0.65] });
+
+      sections.forEach(sec => obs.observe(sec));
+
+      // Default
+      setActive("home");
+    })();
+  </script>
+</body>
+</html>
