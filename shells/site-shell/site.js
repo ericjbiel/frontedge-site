@@ -6,11 +6,23 @@
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // If there is no nav system on this page, skip the section tracking feature.
-  if (!navLinks.length) {
-    // Mobile menu can still exist on some pages, so continue.
+  // ---------- Helpers ----------
+  function setActive(id) {
+    navLinks.forEach(a => {
+      a.dataset.active = (a.dataset.link === id) ? "true" : "false";
+    });
   }
 
+  function normalizePath(pathname) {
+    // "/play" -> "play", "/play/" -> "play", "/" -> "home"
+    const p = (pathname || "/").toLowerCase();
+    if (p === "/" || p === "") return "home";
+    const trimmed = p.replace(/^\/+|\/+$/g, ""); // remove leading/trailing slashes
+    const first = trimmed.split("/")[0] || "home";
+    return first;
+  }
+
+  // ---------- Scroll-spy (ONLY for anchor links) ----------
   const sections = navLinks.length
     ? navLinks
         .map(a => {
@@ -22,12 +34,6 @@
     : [];
 
   let sectionTops = [];
-
-  function setActive(id) {
-    navLinks.forEach(a => {
-      a.dataset.active = (a.dataset.link === id) ? "true" : "false";
-    });
-  }
 
   function getNavHeight() {
     return header ? header.getBoundingClientRect().height : 0;
@@ -69,7 +75,7 @@
     setActive(current);
   }
 
-  // Click: set immediately (feels responsive)
+  // Root page anchor behavior (only if we actually have sections)
   if (sections.length) {
     navLinks.forEach(a => {
       a.addEventListener('click', () => {
@@ -95,9 +101,23 @@
     // Initial
     computeSectionTops();
     updateActiveFromScroll();
+  } else {
+    // ---------- Hub page behavior ----------
+    // If there are no anchor sections, highlight based on URL path.
+    const current = normalizePath(window.location.pathname);
+    // Map your hub paths to your data-link ids
+    const map = {
+      "": "home",
+      "home": "home",
+      "play": "play",
+      "tools": "tools",
+      "labs": "labs"
+    };
+    const id = map[current] || null;
+    if (id) setActive(id);
   }
 
-  // Mobile menu (guarded)
+  // ---------- Mobile menu (guarded) ----------
   const menuBtn = document.querySelector('.menu-btn');
   const menuOverlay = document.getElementById('mobileMenu');
   const menuClose = document.querySelector('.menu-close');
@@ -125,10 +145,9 @@
     if (e.target === menuOverlay) closeMenu();
   });
 
-  // Close when selecting a link (keep your 1:1 setActive behavior)
+  // Close when selecting ANY link; only setActive for anchor links
   menuOverlay?.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
-      // Only update active state for anchor links
       const href = a.getAttribute('href') || '';
       if (href.startsWith('#') && a.dataset.link && navLinks.length) {
         setActive(a.dataset.link);
