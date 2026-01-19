@@ -350,11 +350,42 @@ header{
       font-size: 12px;
       letter-spacing: .06em;
     }
-    .dot{
-      width: 7px; height:7px; border-radius: 99px;
-      background: rgba(124,243,255,.9);
-      box-shadow: 0 0 0 6px rgba(124,243,255,.10);
+    /* Edge Sweep Accent */
+    .edge-sweep{
+      position: relative;
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      background: rgba(234,240,255,.18); /* neutral base */
+      overflow: hidden;
     }
+
+    /* sweeping line */
+    .edge-sweep::after{
+      content:"";
+      position:absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      animation: edgeSweep 900ms cubic-bezier(.4,0,.2,1) 400ms forwards;
+    }
+
+    @keyframes edgeSweep{
+      from{ left: -100%; }
+      to{ left: 100%; }
+    }
+
+    /* optional slow repeat */
+    @media (prefers-reduced-motion: no-preference){
+      .edge-sweep::after{
+        animation:
+          edgeSweep 900ms cubic-bezier(.4,0,.2,1) 400ms forwards,
+          edgeSweep 900ms cubic-bezier(.4,0,.2,1) 12s infinite;
+      }
+    }
+
     h1{
       margin: 18px 0 10px 0;
       font-size: clamp(34px, 4.6vw, 56px);
@@ -819,7 +850,7 @@ header{
       <div class="hero-grid">
         <div>
           <div class="kicker">
-            <span class="dot" aria-hidden="true"></span>
+            <span class="edge-sweep" aria-hidden="true"></span>
             Independent studio
           </div>
 
