@@ -298,8 +298,6 @@ header{
     /* Hub hero normalization (hub pages only) */
     .hub .hero-grid{ min-height: 320px; }
 
-    .hub .hero .lead{ max-width: 58ch; } /* tighter wrapping on hubs */
-
     .hub .hero-right{ min-width: 320px; }
     @media (max-width: 900px){
       .hub .hero-right{ min-width: 0; }
