@@ -2,44 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <!-- ========================= -->
-<!-- Favicons & App Icons -->
-<!-- ========================= -->
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
+  <!-- Favicons & App Icons -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-light-16x16.png" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-light-32x32.png" media="(prefers-color-scheme: light)">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#070A10">
 
-<meta name="theme-color" content="#070A10">
+  <title>Frontedge Studio</title>
+  <meta name="description" content="A small studio building focused digital products.">
 
-<!-- ========================= -->
-<!-- Primary Meta -->
-<!-- ========================= -->
-<meta name="title" content="Frontedge Studio">
-<meta name="description" content="A small studio building focused digital products.">
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Frontedge Studio">
+  <meta property="og:title" content="Frontedge Studio">
+  <meta property="og:description" content="A small studio building focused digital products.">
+  <meta property="og:image" content="https://frontedgestudio.com/assets/og-image.png">
+  <meta property="og:url" content="https://frontedgestudio.com">
 
-<!-- ========================= -->
-<!-- Open Graph / Social -->
-<!-- ========================= -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Frontedge Studio">
-<meta property="og:title" content="Frontedge Studio">
-<meta property="og:description" content="A small studio building focused digital products.">
-<meta property="og:image" content="/assets/og-image.png">
-<meta property="og:url" content="https://frontedgestudio.com">
-
-<!-- ========================= -->
-<!-- Twitter / X -->
-<!-- ========================= -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Frontedge Studio">
-<meta name="twitter:description" content="A small studio building focused digital products.">
-<meta name="twitter:image" content="/assets/og-image.png">
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Frontedge Studio">
+  <meta name="twitter:description" content="A small studio building focused digital products.">
+  <meta name="twitter:image" content="https://frontedgestudio.com/assets/og-image.png">
 
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Frontedge Studio</title>
 
   <style>
     :root{
@@ -814,9 +805,14 @@ header{
       <div class="nav">
         <a class="brand" href="#home" aria-label="Frontedge Studio Home">
           <img
-            src="/assets/logo-f.png"
+            src="/assets/logo-f-128.png"
+            srcset="/assets/logo-f-128.png 1x, /assets/logo-f-256.png 2x"
+            width="34"
+            height="34"
             alt="Frontedge Studio logo"
             class="logo"
+            decoding="async"
+            fetchpriority="high"
           />
           <div>
             <div class="brand-name">Frontedge Studio</div>
