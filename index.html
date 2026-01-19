@@ -350,17 +350,26 @@ header{
       font-size: 12px;
       letter-spacing: .06em;
     }
+
+    .kicker-stack{
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .kicker-label{
+      line-height: 1;
+    }
     
-    /* Tron-style edge streak (replaces dot / square) */
-.edge-streak{
+    .edge-streak{
   position: relative;
-  width: 26px;               /* length of the accent line */
-  height: 10px;              /* just enough to hold the streak */
+  width: 34px;           /* a touch longer looks good under text */
+  height: 6px;           /* minimal */
   display: inline-block;
-  transform: translateY(1px);
+  background: transparent; /* explicitly transparent */
 }
 
-/* faint track line */
+/* optional faint track (remove if you want pure comet only) */
 .edge-streak::before{
   content:"";
   position:absolute;
@@ -371,14 +380,14 @@ header{
   transform: translateY(-50%);
   border-radius: 999px;
   background: linear-gradient(90deg,
-    rgba(124,243,255,.00),
-    rgba(124,243,255,.35),
-    rgba(124,243,255,.00)
+    rgba(124,243,255,0),
+    rgba(124,243,255,.22),
+    rgba(124,243,255,0)
   );
-  opacity: .55;
+  opacity: .35;
 }
 
-/* moving “comet” streak */
+/* moving comet */
 .edge-streak::after{
   content:"";
   position:absolute;
@@ -388,44 +397,30 @@ header{
   height: 2px;
   transform: translateY(-50%);
   border-radius: 999px;
-
-  /* bright core + fade tail (Tron vibe) */
   background: linear-gradient(90deg,
     rgba(124,243,255,0),
     rgba(124,243,255,.25),
     rgba(124,243,255,.95),
-    rgba(183,166,255,.65),
+    rgba(183,166,255,.55),
     rgba(124,243,255,0)
   );
-
-  /* subtle glow without becoming “neon blob” */
-  filter: drop-shadow(0 0 6px rgba(124,243,255,.25));
+  filter: drop-shadow(0 0 6px rgba(124,243,255,.18));
   opacity: .95;
 
+  /* ONCE on load only */
   animation: streakSweep 1100ms cubic-bezier(.3,0,.2,1) 350ms both;
 }
 
-/* keyframes: sweep across then disappear */
 @keyframes streakSweep{
   0%   { transform: translateY(-50%) translateX(0);   opacity: 0; }
   12%  { opacity: .95; }
-  80%  { opacity: .75; }
+  85%  { opacity: .7; }
   100% { transform: translateY(-50%) translateX(250%); opacity: 0; }
 }
 
-/* optional slow repeat */
-@media (prefers-reduced-motion: no-preference){
-  .edge-streak::after{
-    animation:
-      streakSweep 1100ms cubic-bezier(.3,0,.2,1) 350ms both,
-      streakSweep 1100ms cubic-bezier(.3,0,.2,1) 10.5s infinite;
-  }
-}
-
 @media (prefers-reduced-motion: reduce){
-  .edge-streak::after{ animation: none; opacity: .85; }
+  .edge-streak::after{ animation: none; opacity: .8; }
 }
-
 
     h1{
       margin: 18px 0 10px 0;
@@ -890,9 +885,9 @@ header{
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <div class="kicker">
+          <div class="kicker kicker-stack">
+            <span class="kicker-label">Independent studio</span>
             <span class="edge-streak" aria-hidden="true"></span>
-            Independent studio
           </div>
 
           <h1>Frontedge Studio</h1>
