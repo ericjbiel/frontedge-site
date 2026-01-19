@@ -18,7 +18,7 @@
     }
 
     *{ box-sizing:border-box; }
-    html{ scroll-behavior:smooth; }
+    html{ scroll-behavior:smooth; overflow-y: scroll; }
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -293,8 +293,17 @@ header{
       grid-template-columns: 1.25fr .75fr;
       gap: 28px;
       align-items:center;
+      min-height: 320px; /* hub hero normalization */
     }
-    
+
+    .hero .lead{ max-width: 58ch; } /* slightly tighter for consistent wrapping across hubs */
+
+    /* Helps prevent right column jump around breakpoint widths */
+    .hero-right{ min-width: 320px; }
+    @media (max-width: 900px){
+      .hero-right{ min-width: 0; }
+    }
+
     .kicker{
       position: relative;              /* anchor for the streak */
       display: inline-flex;
