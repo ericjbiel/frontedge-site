@@ -1,1 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Play | Frontedge Studio</title>
+  <meta name="description" content="Play web-first games built by Frontedge Studio." />
 
+  <link rel="stylesheet" href="../shells/site-shell/site.css" />
+</head>
+
+<body>
+  <!-- background effects (your root CSS supports these) -->
+  <div class="fx" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <!-- Header (same structure as root, but uses normal links) -->
+    <header>
+      <a class="brand" href="/" aria-label="Frontedge Studio home">
+        <span class="logo" aria-hidden="true">F</span>
+        <span class="brand-name">Frontedge Studio</span>
+        <span class="brand-sub">Play</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/play/" aria-current="page">Play</a>
+        <a class="nav-link" href="/tools/">Tools</a>
+        <a class="nav-link" href="/experiments/">Experiments</a>
+      </nav>
+
+      <!-- Mobile menu button (matches your existing JS/CSS pattern) -->
+      <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false">
+        <span aria-hidden="true">Menu</span>
+      </button>
+    </header>
+
+    <!-- Mobile menu overlay (reuses your existing JS/CSS) -->
+    <div id="mobileMenu" class="menu-overlay" aria-hidden="true">
+      <div class="menu-sheet" role="dialog" aria-label="Mobile menu">
+        <button class="menu-close" type="button" aria-label="Close menu">Close</button>
+
+        <div class="menu-links">
+          <a class="menu-link" href="/">Home</a>
+          <a class="menu-link" href="/play/" aria-current="page">Play</a>
+          <a class="menu-link" href="/tools/">Tools</a>
+          <a class="menu-link" href="/experiments/">Experiments</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" aria-label="Play hub">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker">Frontedge Studio</div>
+          <h1 class="h1">Play</h1>
+          <p class="lead">
+            Small web-first games. Quick sessions. Fast restarts. Built for phone and desktop.
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn primary" href="/projects/game-001/play/">Play Game-001</a>
+            <a class="btn" href="/projects/game-002/play/">Play Game-002</a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="mini">
+            <div class="mini-title">Now Live</div>
+            <div class="pill-row">
+              <span class="pill">Game-001</span>
+              <span class="pill">Game-002</span>
+              <span class="pill">v1</span>
+            </div>
+            <div class="mini-note">More drops soon.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Games grid -->
+    <section class="section" aria-label="Games">
+      <div class="section-title">
+        <h2 class="h2">Games</h2>
+        <p class="muted">Tap a card to launch. Each game uses the shared play shell.</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Game-001 -->
+        <a class="cat" href="/projects/game-001/play/" aria-label="Play Game-001">
+          <div class="cat-top">
+            <div class="cat-title">Game-001</div>
+            <div class="tag">v1</div>
+          </div>
+          <div class="cat-desc">
+            One-input survival on a neon-dark field. Tight runs, fast restarts.
+          </div>
+          <div class="cat-meta">
+            <span class="chip">Arcade</span>
+            <span class="chip">One-input</span>
+            <span class="chip">Neon</span>
+          </div>
+          <div class="cat-cta">
+            <span class="btn primary">Play</span>
+            <span class="btn ghost">View</span>
+          </div>
+        </a>
+
+        <!-- Game-002 -->
+        <a class="cat" href="/projects/game-002/play/" aria-label="Play Game-002">
+          <div class="cat-top">
+            <div class="cat-title">Game-002</div>
+            <div class="tag">v1</div>
+          </div>
+          <div class="cat-desc">
+            Shield timing and pressure. Break shards, stay alive, chase the score.
+          </div>
+          <div class="cat-meta">
+            <span class="chip">Timing</span>
+            <span class="chip">Survival</span>
+            <span class="chip">Arcade</span>
+          </div>
+          <div class="cat-cta">
+            <span class="btn primary">Play</span>
+            <span class="btn ghost">View</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-left">
+          <div class="footer-brand">Frontedge Studio</div>
+          <div class="footer-sub">Web-first games and small products.</div>
+        </div>
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="/play/" aria-current="page">Play</a>
+          <a href="/tools/">Tools</a>
+          <a href="/experiments/">Experiments</a>
+        </div>
+        <div class="footer-right">
+          © <span id="year"></span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../shells/site-shell/site.js"></script>
+</body>
+</html>
