@@ -338,85 +338,73 @@ header{
       gap: 28px;
       align-items:center;
     }
+    
     .kicker{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
+      position: relative;              /* anchor for the streak */
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       padding: 8px 12px;
       border-radius: 999px;
       border: 1px solid rgba(234,240,255,.12);
       background: rgba(234,240,255,.04);
-      color: rgba(234,240,255,.72);
-      font-size: 12px;
-      letter-spacing: .06em;
     }
 
-    .kicker-stack{
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-}
+    .kicker-label{
+      line-height: 1;
+    }
+    
+    /* Edge streak anchored to pill bottom */
+    .edge-streak{
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 2px;          /* hugs the pill edge */
+      height: 2px;
+      overflow: hidden;     /* clips the comet */
+      pointer-events: none;
+    }
 
-.kicker-label{
-  line-height: 1;
-}
+    /* comet */
+    .edge-streak::after{
+      content:"";
+      position:absolute;
+      top: 0;
+      left: -30%;
+      width: 30%;
+      height: 100%;
+      border-radius: 999px;
 
-/* Full-width streak under the text */
-.edge-streak{
-  position: relative;
-  width: 100%;           /* key: match pill width */
-  height: 6px;
-  display: block;        /* key: occupy full line */
-  background: transparent;
-  overflow: visible;
-}
+      background: linear-gradient(90deg,
+        rgba(124,243,255,0),
+        rgba(124,243,255,.35),
+        rgba(124,243,255,.95),
+        rgba(183,166,255,.55),
+        rgba(124,243,255,0)
+      );
 
-/* comet only (no gray track) */
-.edge-streak::after{
-  content:"";
-  position:absolute;
-  top: 50%;
-  left: -25%;
-  width: 35%;            /* comet length */
-  height: 2px;
-  transform: translateY(-50%) translateX(0);
-  border-radius: 999px;
+      filter: drop-shadow(0 0 6px rgba(124,243,255,.2));
+      opacity: 0;
 
-  background: linear-gradient(90deg,
-    rgba(124,243,255,0),
-    rgba(124,243,255,.22),
-    rgba(124,243,255,.95),
-    rgba(183,166,255,.55),
-    rgba(124,243,255,0)
-  );
+      animation: streakSweep 1100ms cubic-bezier(.3,0,.2,1) 400ms both;
+    }
 
-  filter: drop-shadow(0 0 6px rgba(124,243,255,.18));
-  opacity: 0;
+    @keyframes streakSweep{
+      0%   { transform: translateX(0); opacity: 0; }
+      12%  { opacity: .95; }
+      85%  { opacity: .7; }
+      100% { transform: translateX(360%); opacity: 0; }
+    }
 
-  /* run once on load */
-  animation: streakSweep 1100ms cubic-bezier(.3,0,.2,1) 350ms both;
-}
+    /* replay on hover */
+    .kicker:hover .edge-streak::after{
+      animation: streakSweep 1100ms cubic-bezier(.3,0,.2,1) both;
+    }
 
-@keyframes streakSweep{
-  0%   { opacity: 0; transform: translateY(-50%) translateX(0); }
-  12%  { opacity: .95; }
-  85%  { opacity: .7; }
-  100% { opacity: 0; transform: translateY(-50%) translateX(360%); }
-}
-
-/* replay on hover: restart animation cleanly */
-.kicker:hover .edge-streak::after{
-  animation: none;
-}
-
-.kicker:hover .edge-streak::after{
-  animation: streakSweep 1100ms cubic-bezier(.3,0,.2,1) 0ms both;
-}
-
-@media (prefers-reduced-motion: reduce){
-  .edge-streak::after{ animation: none; opacity: .75; }
-}
-
+    @media (prefers-reduced-motion: reduce){
+      .edge-streak::after{ animation: none; opacity: .75; }
+    }
+    
     h1{
       margin: 18px 0 10px 0;
       font-size: clamp(34px, 4.6vw, 56px);
@@ -880,7 +868,7 @@ header{
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <div class="kicker kicker-stack">
+          <div class="kicker">
             <span class="kicker-label">Independent studio</span>
             <span class="edge-streak" aria-hidden="true"></span>
           </div>
