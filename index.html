@@ -360,7 +360,11 @@ header{
     .kicker-label{
       line-height: 1;
     }
-    
+
+    .kicker:hover .edge-streak::after{
+      animation: streakSweep 1100ms cubic-bezier(.3,0,.2,1) 0ms both;
+    }
+
     .edge-streak{
   position: relative;
   width: 34px;           /* a touch longer looks good under text */
