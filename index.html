@@ -352,78 +352,69 @@ header{
     }
 
     .kicker-stack{
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-    }
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
 
-    .kicker-label{
-      line-height: 1;
-    }
+.kicker-label{
+  line-height: 1;
+}
 
-    .kicker:hover .edge-streak::after{
-      animation: streakSweep 1100ms cubic-bezier(.3,0,.2,1) 0ms both;
-    }
-
-    .edge-streak{
+/* Full-width streak under the text */
+.edge-streak{
   position: relative;
-  width: 34px;           /* a touch longer looks good under text */
-  height: 6px;           /* minimal */
-  display: inline-block;
-  background: transparent; /* explicitly transparent */
+  width: 100%;           /* key: match pill width */
+  height: 6px;
+  display: block;        /* key: occupy full line */
+  background: transparent;
+  overflow: visible;
 }
 
-/* optional faint track (remove if you want pure comet only) */
-.edge-streak::before{
-  content:"";
-  position:absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 2px;
-  transform: translateY(-50%);
-  border-radius: 999px;
-  background: linear-gradient(90deg,
-    rgba(124,243,255,0),
-    rgba(124,243,255,.22),
-    rgba(124,243,255,0)
-  );
-  opacity: .35;
-}
-
-/* moving comet */
+/* comet only (no gray track) */
 .edge-streak::after{
   content:"";
   position:absolute;
   top: 50%;
-  left: -35%;
-  width: 55%;
+  left: -25%;
+  width: 35%;            /* comet length */
   height: 2px;
-  transform: translateY(-50%);
+  transform: translateY(-50%) translateX(0);
   border-radius: 999px;
+
   background: linear-gradient(90deg,
     rgba(124,243,255,0),
-    rgba(124,243,255,.25),
+    rgba(124,243,255,.22),
     rgba(124,243,255,.95),
     rgba(183,166,255,.55),
     rgba(124,243,255,0)
   );
-  filter: drop-shadow(0 0 6px rgba(124,243,255,.18));
-  opacity: .95;
 
-  /* ONCE on load only */
+  filter: drop-shadow(0 0 6px rgba(124,243,255,.18));
+  opacity: 0;
+
+  /* run once on load */
   animation: streakSweep 1100ms cubic-bezier(.3,0,.2,1) 350ms both;
 }
 
 @keyframes streakSweep{
-  0%   { transform: translateY(-50%) translateX(0);   opacity: 0; }
+  0%   { opacity: 0; transform: translateY(-50%) translateX(0); }
   12%  { opacity: .95; }
   85%  { opacity: .7; }
-  100% { transform: translateY(-50%) translateX(250%); opacity: 0; }
+  100% { opacity: 0; transform: translateY(-50%) translateX(360%); }
+}
+
+/* replay on hover: restart animation cleanly */
+.kicker:hover .edge-streak::after{
+  animation: none;
+}
+
+.kicker:hover .edge-streak::after{
+  animation: streakSweep 1100ms cubic-bezier(.3,0,.2,1) 0ms both;
 }
 
 @media (prefers-reduced-motion: reduce){
-  .edge-streak::after{ animation: none; opacity: .8; }
+  .edge-streak::after{ animation: none; opacity: .75; }
 }
 
     h1{
