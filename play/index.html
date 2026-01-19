@@ -10,71 +10,97 @@
 </head>
 
 <body>
-  <!-- background effects (your root CSS supports these) -->
   <div class="fx" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
-  <div class="wrap">
-    <!-- Header (same structure as root, but uses normal links) -->
-    <header>
-      <a class="brand" href="/" aria-label="Frontedge Studio home">
-        <span class="logo" aria-hidden="true">F</span>
-        <span class="brand-name">Frontedge Studio</span>
-        <span class="brand-sub">Play</span>
-      </a>
+  <!-- Header (root structure, hub links) -->
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="/" aria-label="Frontedge Studio Home">
+          <img
+            src="/assets/logo-f-128.png"
+            srcset="/assets/logo-f-128.png 1x, /assets/logo-f-256.png 2x"
+            width="34"
+            height="34"
+            alt="Frontedge Studio logo"
+            class="logo"
+            decoding="async"
+            fetchpriority="high"
+          />
+          <div>
+            <div class="brand-name">Frontedge Studio</div>
+            <div class="brand-sub">Focused digital products</div>
+          </div>
+        </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/play/" aria-current="page">Play</a>
-        <a class="nav-link" href="/tools/">Tools</a>
-        <a class="nav-link" href="/labs/">Labs</a>
-      </nav>
+        <nav class="primary-nav" aria-label="Primary">
+          <button class="menu-btn" type="button" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
 
-      <!-- Mobile menu button (matches your existing JS/CSS pattern) -->
-      <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false">
-        <span aria-hidden="true">Menu</span>
-      </button>
-    </header>
-
-    <!-- Mobile menu overlay (reuses your existing JS/CSS) -->
-    <div id="mobileMenu" class="menu-overlay" aria-hidden="true">
-      <div class="menu-sheet" role="dialog" aria-label="Mobile menu">
-        <button class="menu-close" type="button" aria-label="Close menu">Close</button>
-
-        <div class="menu-links">
-          <a class="menu-link" href="/">Home</a>
-          <a class="menu-link" href="/play/" aria-current="page">Play</a>
-          <a class="menu-link" href="/tools/">Tools</a>
-          <a class="menu-link" href="/labs/">Labs</a>
-        </div>
+          <ul class="nav-links">
+            <li><a href="/" data-link="home">Home</a></li>
+            <li><a href="/play/" data-link="play">Play</a></li>
+            <li><a href="/tools/" data-link="tools">Tools</a></li>
+            <li><a href="/labs/" data-link="labs">Labs</a></li>
+          </ul>
+        </nav>
       </div>
     </div>
+  </header>
 
+  <!-- Mobile Menu Overlay (root structure, hub links) -->
+  <div class="menu-overlay" id="mobileMenu" aria-hidden="true">
+    <div class="menu-sheet" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="menu-top">
+        <div class="menu-spacer" aria-hidden="true"></div>
+        <button class="menu-close" type="button" aria-label="Close menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="menu-links" aria-label="Menu links">
+        <a href="/" data-link="home">Home</a>
+        <a href="/play/" data-link="play">Play</a>
+        <a href="/tools/" data-link="tools">Tools</a>
+        <a href="/labs/" data-link="labs">Labs</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
     <!-- Hero -->
     <section class="hero" aria-label="Play hub">
-      <div class="hero-grid">
-        <div>
-          <div class="kicker">Frontedge Studio</div>
-          <h1 class="h1">Play</h1>
-          <p class="lead">
-            Small web-first games. Quick sessions. Fast restarts. Built for phone and desktop.
-          </p>
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <div class="kicker">Frontedge Studio</div>
+            <h1 class="h1">Play</h1>
+            <p class="lead">
+              Small web-first games. Quick sessions. Fast restarts. Built for phone and desktop.
+            </p>
 
-          <div class="hero-cta">
-            <a class="btn primary" href="/projects/game-001/play/">Play Game-001</a>
-            <a class="btn" href="/projects/game-002/play/">Play Game-002</a>
-          </div>
-        </div>
-
-        <div class="hero-right">
-          <div class="mini">
-            <div class="mini-title">Now Live</div>
-            <div class="pill-row">
-              <span class="pill">Game-001</span>
-              <span class="pill">Game-002</span>
-              <span class="pill">v1</span>
+            <div class="hero-cta">
+              <a class="btn primary" href="/projects/game-001/play/">Play Game-001</a>
+              <a class="btn" href="/projects/game-002/play/">Play Game-002</a>
             </div>
-            <div class="mini-note">More drops soon.</div>
+          </div>
+
+          <div class="hero-right">
+            <div class="mini">
+              <div class="mini-title">Now Live</div>
+              <div class="pill-row">
+                <span class="pill">Game-001</span>
+                <span class="pill">Game-002</span>
+                <span class="pill">v1</span>
+              </div>
+              <div class="mini-note">More drops soon.</div>
+            </div>
           </div>
         </div>
       </div>
@@ -82,72 +108,50 @@
 
     <!-- Games grid -->
     <section class="section" aria-label="Games">
-      <div class="section-title">
-        <h2 class="h2">Games</h2>
-        <p class="muted">Tap a card to launch. Each game uses the shared play shell.</p>
-      </div>
+      <div class="wrap">
+        <div class="section-title">Games</div>
+        <h2 class="h2">Available now</h2>
+        <p class="lead">Tap a card to launch.</p>
 
-      <div class="projects-grid">
-        <!-- Game-001 -->
-        <a class="cat" href="/projects/game-001/play/" aria-label="Play Game-001">
-          <div class="cat-top">
-            <div class="cat-title">Game-001</div>
-            <div class="tag">v1</div>
-          </div>
-          <div class="cat-desc">
-            One-input survival on a neon-dark field. Tight runs, fast restarts.
-          </div>
-          <div class="cat-meta">
-            <span class="chip">Arcade</span>
-            <span class="chip">One-input</span>
-            <span class="chip">Neon</span>
-          </div>
-          <div class="cat-cta">
-            <span class="btn primary">Play</span>
-            <span class="btn ghost">View</span>
-          </div>
-        </a>
+        <div class="projects-grid" style="margin-top:18px;">
+          <!-- Game-001 -->
+          <a class="cat" href="/projects/game-001/play/" aria-label="Play Game-001">
+            <h3>Game 001</h3>
+            <p>One-input survival on a neon-dark field. Tight runs, fast restarts.</p>
+          </a>
 
-        <!-- Game-002 -->
-        <a class="cat" href="/projects/game-002/play/" aria-label="Play Game-002">
-          <div class="cat-top">
-            <div class="cat-title">Game-002</div>
-            <div class="tag">v1</div>
-          </div>
-          <div class="cat-desc">
-            Shield timing and pressure. Break shards, stay alive, chase the score.
-          </div>
-          <div class="cat-meta">
-            <span class="chip">Timing</span>
-            <span class="chip">Survival</span>
-            <span class="chip">Arcade</span>
-          </div>
-          <div class="cat-cta">
-            <span class="btn primary">Play</span>
-            <span class="btn ghost">View</span>
-          </div>
-        </a>
+          <!-- Game-002 -->
+          <a class="cat" href="/projects/game-002/play/" aria-label="Play Game-002">
+            <h3>Game 002</h3>
+            <p>Shield timing and pressure. Break shards, stay alive, chase the score.</p>
+          </a>
+        </div>
       </div>
     </section>
+  </main>
 
-    <footer class="site-footer">
+  <!-- Footer (root structure, hub links) -->
+  <footer class="site-footer" aria-label="Footer">
+    <div class="wrap">
       <div class="footer-grid">
-        <div class="footer-left">
-          <div class="footer-brand">Frontedge Studio</div>
-          <div class="footer-sub">Web-first games and small products.</div>
+        <div class="footer-brand">
+          <div class="footer-name">Frontedge Studio</div>
+          <div class="footer-muted">A small studio building focused digital products.</div>
         </div>
-        <div class="footer-links">
+
+        <div class="footer-links" aria-label="Footer links">
           <a href="/">Home</a>
-          <a href="/play/" aria-current="page">Play</a>
+          <a href="/play/">Play</a>
           <a href="/tools/">Tools</a>
           <a href="/labs/">Labs</a>
         </div>
-        <div class="footer-right">
-          © <span id="year"></span>
+
+        <div class="footer-meta">
+          <div class="footer-muted">© <span id="year"></span> Frontedge Studio. All rights reserved.</div>
         </div>
       </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
   <script src="../shells/site-shell/site.js"></script>
 </body>
