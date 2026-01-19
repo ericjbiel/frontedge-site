@@ -101,20 +101,21 @@
     // Initial
     computeSectionTops();
     updateActiveFromScroll();
-  } else {
-    // ---------- Hub page behavior ----------
-    // If there are no anchor sections, highlight based on URL path.
-    const current = normalizePath(window.location.pathname);
-    // Map your hub paths to your data-link ids
-    const map = {
-      "": "home",
-      "home": "home",
-      "play": "play",
-      "tools": "tools",
-      "labs": "labs"
-    };
-    const id = map[current] || null;
-    if (id) setActive(id);
+    } else {
+    // Hub pages: no anchor sections, so highlight based on URL path.
+    const path = (window.location.pathname || "/").toLowerCase();
+
+    // Normalize "/play" and "/play/" to "play"
+    const trimmed = path.replace(/^\/+|\/+$/g, "");
+    const first = trimmed.split("/")[0]; // "", "play", "tools", "labs", etc.
+
+    let id = "home";
+    if (first === "play") id = "play";
+    else if (first === "tools") id = "tools";
+    else if (first === "labs") id = "labs";
+    else if (first === "") id = "home";
+
+    setActive(id);
   }
 
   // ---------- Mobile menu (guarded) ----------
