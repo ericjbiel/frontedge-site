@@ -284,26 +284,27 @@ header{
     /* Hero */
     .hero{
       padding: 86px 0 40px;
-      min-height: calc(92vh - var(--navH));
+      min-height: 520px;
       display:flex;
       align-items:center;
+    }
+    @media (max-width: 720px){
+      .hero{ min-height: 560px; } /* mobile needs a touch more room */
+    }
+    .hero-right{ min-width: 320px; }
+    @media (max-width: 900px){
+      .hero-right{ min-width: 0; }
     }
     .hero-grid{
       display:grid;
       grid-template-columns: 1.25fr .75fr;
       gap: 28px;
       align-items:center;
+      min-height: 0;
     }
-
-    /* Hub hero normalization (hub pages only) */
-    .hub .hero-grid{ min-height: 320px; }
-
-    .hub .hero .lead{ max-width: 60ch; }
-
-    .hub .hero-right{ min-width: 320px; }
-    @media (max-width: 900px){
-      .hub .hero-right{ min-width: 0; }
-    }
+    .hero-cta{ min-height: 44px; }   /* reserves a row even if buttons wrap */
+    .hero .h1{ max-width: 18ch; }    /* consistent headline wrapping */
+    .hero .lead{ max-width: 60ch; }  /* consistent lead wrapping across root + hubs */
 
     .kicker{
       position: relative;              /* anchor for the streak */
