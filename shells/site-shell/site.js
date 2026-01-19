@@ -126,9 +126,13 @@
   });
 
   // Close when selecting a link (keep your 1:1 setActive behavior)
-  menuOverlay?.querySelectorAll('a[href^="#"][data-link]').forEach(a => {
+  menuOverlay?.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
-      if (navLinks.length) setActive(a.dataset.link);
+      // Only update active state for anchor links
+      const href = a.getAttribute('href') || '';
+      if (href.startsWith('#') && a.dataset.link && navLinks.length) {
+        setActive(a.dataset.link);
+      }
       closeMenu();
     });
   });
