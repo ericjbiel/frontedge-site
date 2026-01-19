@@ -1,1 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tools | Frontedge Studio</title>
+  <meta name="description" content="Tools built by Frontedge Studio." />
 
+  <link rel="stylesheet" href="../shells/site-shell/site.css" />
+</head>
+
+<body>
+  <div class="fx" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header>
+      <a class="brand" href="/" aria-label="Frontedge Studio home">
+        <span class="logo" aria-hidden="true">F</span>
+        <span class="brand-name">Frontedge Studio</span>
+        <span class="brand-sub">Tools</span>
+      </a>
+
+      <!-- Plain nav links (no .nav-links / no data-link) -->
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/play/">Play</a>
+        <a class="nav-link" href="/tools/" aria-current="page">Tools</a>
+        <a class="nav-link" href="/experiments/">Experiments</a>
+      </nav>
+
+      <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false">
+        <span aria-hidden="true">Menu</span>
+      </button>
+    </header>
+
+    <!-- Mobile menu overlay (works with your existing JS) -->
+    <div id="mobileMenu" class="menu-overlay" aria-hidden="true">
+      <div class="menu-sheet" role="dialog" aria-label="Mobile menu">
+        <button class="menu-close" type="button" aria-label="Close menu">Close</button>
+
+        <div class="menu-links">
+          <a class="menu-link" href="/">Home</a>
+          <a class="menu-link" href="/play/">Play</a>
+          <a class="menu-link" href="/tools/" aria-current="page">Tools</a>
+          <a class="menu-link" href="/experiments/">Experiments</a>
+        </div>
+      </div>
+    </div>
+
+    <section class="hero" aria-label="Tools hub">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker">Frontedge Studio</div>
+          <h1 class="h1">Tools</h1>
+          <p class="lead">
+            Small utility products and helpers. Fast, focused, web-first.
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn" href="/play/">Browse Games</a>
+            <a class="btn primary" href="/experiments/">See Experiments</a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="mini">
+            <div class="mini-title">Status</div>
+            <div class="pill-row">
+              <span class="pill">Coming soon</span>
+              <span class="pill">v0</span>
+            </div>
+            <div class="mini-note">Tools will appear here as they ship.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Tools list">
+      <div class="section-title">
+        <h2 class="h2">Tool Drops</h2>
+        <p class="muted">This hub will list utility apps and small products.</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Placeholder Tool Card -->
+        <div class="cat" role="article" aria-label="Tool placeholder">
+          <div class="cat-top">
+            <div class="cat-title">Tool-001</div>
+            <div class="tag">soon</div>
+          </div>
+          <div class="cat-desc">
+            Placeholder for your first utility. Add a short 1-line hook here.
+          </div>
+          <div class="cat-meta">
+            <span class="chip">Utility</span>
+            <span class="chip">Web-first</span>
+            <span class="chip">Fast</span>
+          </div>
+          <div class="cat-cta">
+            <span class="btn ghost">Not live yet</span>
+          </div>
+        </div>
+
+        <!-- Placeholder Tool Card -->
+        <div class="cat" role="article" aria-label="Tool placeholder">
+          <div class="cat-top">
+            <div class="cat-title">Tool-002</div>
+            <div class="tag">soon</div>
+          </div>
+          <div class="cat-desc">
+            Placeholder for your next utility. Swap this card later.
+          </div>
+          <div class="cat-meta">
+            <span class="chip">Utility</span>
+            <span class="chip">Tiny v1</span>
+            <span class="chip">Clean</span>
+          </div>
+          <div class="cat-cta">
+            <span class="btn ghost">Not live yet</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-left">
+          <div class="footer-brand">Frontedge Studio</div>
+          <div class="footer-sub">Web-first games and small products.</div>
+        </div>
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="/play/">Play</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/experiments/">Experiments</a>
+        </div>
+        <div class="footer-right">
+          © <span id="year"></span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../shells/site-shell/site.js"></script>
+</body>
+</html>
